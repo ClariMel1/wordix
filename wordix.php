@@ -1,15 +1,15 @@
 <?php
-
+//hola//
 /*
 La librería JugarWordix posee la definición de constantes y funciones necesarias
 para jugar al Wordix.
 Puede ser utilizada por cualquier programador para incluir en sus programas.
 */
 
-/**************************************/
-/***** DEFINICION DE CONSTANTES *******/
-/**************************************/
-const CANT_INTENTOS = 6;
+/**************/
+/** DEFINICION DE CONSTANTES ****/
+/**************/
+const CANT_INTENTOS = 7;
 
 /*
     disponible: letra que aún no fue utilizada para adivinar la palabra
@@ -22,12 +22,14 @@ const ESTADO_LETRA_ENCONTRADA = "encontrada";
 const ESTADO_LETRA_DESCARTADA = "descartada";
 const ESTADO_LETRA_PERTENECE = "pertenece";
 
-/**************************************/
-/***** DEFINICION DE FUNCIONES ********/
-/**************************************/
+/**************/
+/** DEFINICION DE FUNCIONES ***/
+/**************/
 
 /**
- *  ****COMPLETAR*****
+ * solicita el numero ,minimo y maximo
+ *@param int $min,$max
+ * @return int 
  */
 function solicitarNumeroEntre($min, $max)
 {
@@ -50,7 +52,7 @@ function solicitarNumeroEntre($min, $max)
 
 /**
  * Escrbir un texto en color ROJO
- * @param string $texto)
+ * @param string $texto
  */
 function escribirRojo($texto)
 {
@@ -59,7 +61,7 @@ function escribirRojo($texto)
 
 /**
  * Escrbir un texto en color VERDE
- * @param string $texto)
+ * @param string $texto
  */
 function escribirVerde($texto)
 {
@@ -68,7 +70,7 @@ function escribirVerde($texto)
 
 /**
  * Escrbir un texto en color AMARILLO
- * @param string $texto)
+ * @param string $texto
  */
 function escribirAmarillo($texto)
 {
@@ -77,7 +79,7 @@ function escribirAmarillo($texto)
 
 /**
  * Escrbir un texto en color GRIS
- * @param string $texto)
+ * @param string $texto
  */
 function escribirGris($texto)
 {
@@ -86,7 +88,7 @@ function escribirGris($texto)
 
 /**
  * Escrbir un texto pantalla.
- * @param string $texto)
+ * @param string $texto
  */
 function escribirNormal($texto)
 {
@@ -120,20 +122,22 @@ function escribirSegunEstado($texto, $estado)
 }
 
 /**
- * ****COMPLETAR*****
+ *@param string $usuario
  */
 function escribirMensajeBienvenida($usuario)
 {
-    echo "***************************************************\n";
+    echo "*****************\n";
     echo "** Hola ";
     escribirAmarillo($usuario);
     echo " Juguemos una PARTIDA de WORDIX! **\n";
-    echo "***************************************************\n";
+    echo "*****************\n";
 }
 
 
 /**
- * ****COMPLETAR*****
+ *
+ * @param $cadena
+ * @return boolean
  */
 function esPalabra($cadena)
 {
@@ -149,7 +153,8 @@ function esPalabra($cadena)
 }
 
 /**
- *  ****COMPLETAR*****
+ *
+ * @return string
  */
 function leerPalabra5Letras()
 {
@@ -167,7 +172,7 @@ function leerPalabra5Letras()
 
 
 /**
- * Inicia una estructura de datos Teclado. La estructura es de tipo: ¿Indexado, asociativo o Multidimensional?
+ * Inicia una estructura de datos Teclado. La estructura es de tipo: asociativo
  *@return array
  */
 function iniciarTeclado()
@@ -307,7 +312,7 @@ function actualizarTeclado($teclado, $estructuraPalabraIntento)
 /**
  * Determina si se ganó una palabra intento posee todas sus letras "Encontradas".
  * @param array $estructuraPalabraIntento
- * @return bool
+ * @return boolean
  */
 function esIntentoGanado($estructuraPalabraIntento)
 {
@@ -328,12 +333,12 @@ function esIntentoGanado($estructuraPalabraIntento)
 }
 
 /**
- * ****COMPLETAR***** documentación de la intefaz
+ * *COMPLETAR** documentación de la intefaz
  */
-function obtenerPuntajeWordix()  /* ****COMPLETAR***** parámetros formales necesarios */
+function obtenerPuntajeWordix()  /* *COMPLETAR** parámetros formales necesarios */
 {
 
-    /* ****COMPLETAR***** cuerpo de la función*/
+    /* *COMPLETAR** cuerpo de la función*/
     return 0;
 }
 
@@ -345,7 +350,7 @@ function obtenerPuntajeWordix()  /* ****COMPLETAR***** parámetros formales nece
  */
 function jugarWordix($palabraWordix, $nombreUsuario)
 {
-    /*Inicialización*/
+    //Inicialización/
     $arregloDeIntentosWordix = [];
     $teclado = iniciarTeclado();
     escribirMensajeBienvenida($nombreUsuario);
@@ -386,3 +391,4 @@ function jugarWordix($palabraWordix, $nombreUsuario)
 
     return $partida;
 }
+
