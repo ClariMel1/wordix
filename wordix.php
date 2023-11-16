@@ -1,5 +1,5 @@
 <?php
-//hola//
+
 /*
 La librería JugarWordix posee la definición de constantes y funciones necesarias
 para jugar al Wordix.
@@ -333,13 +333,43 @@ function esIntentoGanado($estructuraPalabraIntento)
 }
 
 /**
- * *COMPLETAR** documentación de la intefaz
+ * Determina el puntaje del ganador mediante la cantidad de intentos y la palabra usada
+ * @param int $nroIntento
+ * @param string $palabraWordix
+ * @return int
  */
-function obtenerPuntajeWordix()  /* *COMPLETAR** parámetros formales necesarios */
+function obtenerPuntajeWordix($nroIntento, $palabraWordix) 
 {
+    if ($nroIntento > 0){
+        if($nroIntento == 1){
+            $puntaje = 6;
+        }elseif($nroIntento ==2){
+            $puntaje = 5;
+        }elseif($nroIntento == 3){
+            $puntaje = 4;
+        }elseif($nroIntento == 4){
+            $puntaje = 3;
+        }elseif($nroIntento == 5){
+            $puntaje = 2;
+        }elseif($nroIntento ==6){
+            $puntaje = 1;
+        }
+    }else{
+        $puntaje = 0;
+    };
+    
+    for($i =0; $i < strlen($palabraWordix); $i++){
+        $letra = strtolower($palabraWordix [$i]);
+        if(strpos ("aeiou", $letra)!== false){
+            $puntaje = $puntaje + 1;
+        }elseif($letra <= "m"){
+            $puntaje = $puntaje + 2;
+        }else{
+            $puntaje = $puntaje + 3;
+        }
+    }
 
-    /* *COMPLETAR** cuerpo de la función*/
-    return 0;
+    return ($puntaje);
 }
 
 /**
@@ -374,7 +404,7 @@ function jugarWordix($palabraWordix, $nombreUsuario)
 
     if ($ganoElIntento) {
         $nroIntento--;
-        $puntaje = obtenerPuntajeWordix();
+        $puntaje = obtenerPuntajeWordix($nroIntento, $palabraIntento);
         echo "Adivinó la palabra Wordix en el intento " . $nroIntento . "!: " . $palabraIntento . " Obtuvo $puntaje puntos!";
     } else {
         $nroIntento = 0; //reset intento
