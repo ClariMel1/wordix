@@ -642,38 +642,40 @@ function solicitarJugador (){
 /**
  * Esta funcion muestra una colección de partidas ordenadas alfabeticamente por el nombre del jugador
  * y en caso de tener el mismo nombre evalúa la palabra que jugó de la misma manera (la función se basa en un arreglo)
- * @param array $coleccionPartidas
+ * @param array $elemento1
+ * @param array $elemento2
+ * @return int
  */
- function miComparacion($elemento1, $elemento2) {
+function miComparacion($elemento1, $elemento2) {
     $comparacionNombreJugador = strcmp($elemento1["jugador"], $elemento2["jugador"]);
-    $comparacionPalabraJugada = strcmp($elemento1["palabraWordix"], $elemento2["palabraWordix"]);
 
     if ($comparacionNombreJugador != 0) {
         return $comparacionNombreJugador;
     } else {
-        return $comparacionPalabraJugada;
+        return strcmp($elemento1["palabraWordix"], $elemento2["palabraWordix"]);
     }
 }
 
-$coleccionPartidas = [
-    ["jugador" => "majo", "palabraWordix" => "queso"],
-    ["jugador" => "rudolf", "palabraWordix" => "casas"],
-    ["jugador" => "pink2000", "palabraWordix" => "queso"],
-    ["jugador" => "migue", "palabraWordix" => "mujer"],
-    ["jugador" => "migue1", "palabraWordix" => "huevo"],
-    ["jugador" => "clara", "palabraWordix" => "tinto"],
-    ["jugador" => "clara2", "palabraWordix" => "verde"],
-    ["jugador" => "gordo1", "palabraWordix" => "melon"],
-    ["jugador" => "gordo2", "palabraWordix" => "yuyos"],
-    ["jugador" => "diego", "palabraWordix" => "pisos"],
-    ["jugador" => "diego2", "palabraWordix" => "cebra"]
+$coleccionPartidas = [ 
+["jugador" => "majo", "palabraWordix" => "queso"],
+["jugador" => "rudolf", "palabraWordix" => "casas"],
+["jugador" => "pink2000", "palabraWordix" => "queso"],
+["jugador" => "migue", "palabraWordix" => "mujer"],
+["jugador" => "migue1", "palabraWordix" => "huevo"],
+["jugador" => "clara", "palabraWordix" => "tinto"],
+["jugador" => "clara2", "palabraWordix" => "verde"],
+["jugador" => "gordo1", "palabraWordix" => "melon"],
+["jugador" => "gordo2", "palabraWordix" => "yuyos"],
+["jugador" => "diego", "palabraWordix" => "pisos"],
+["jugador" => "diego2", "palabraWordix" => "cebra"]   
 ];
-  
 
 // Ordenar las partidas
 usort($coleccionPartidas, 'miComparacion');
 
 // Imprimir las partidas ordenadas con índices comenzando en 1
+
+$
 $indice = 1;
 foreach ($coleccionPartidas as $partida) { //recorrido exhaustivo para mostrar todas
     echo "Lugar: $indice\n";
