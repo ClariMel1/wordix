@@ -424,3 +424,162 @@ function jugarWordix($palabraWordix, $nombreUsuario)
     return $partida;
 }
 
+
+/*
+FUNCIONES DEL EQUIPO DE DESARROLLO 
+*/
+
+//consigna Nº2
+/**
+ * Esta función muestra una estructura de datos con ejemplos de partidas ya jugadas 
+ * @param array multidimensional $coleccionPartidas
+ * @return array multidimensional $coleccionPartidas
+ */
+function cargarPartidas(){
+    $coleccionPartidas =[
+        ["palabraWordix" => "queso","jugador" => "majo","intentos" => 0,"puntaje"=>0 ],
+        ["palabraWordix" => "casas","jugador" => "rudolf","intentos" => 3,"puntaje"=>14 ],
+        ["palabraWordix" => "queso","jugador" => "pink2000","intentos" => 6,"puntaje"=>10 ],
+        ["palabraWordix" => "mujer","jugador" => "migue","intentos" => 1,"puntaje"=>15 ],
+        ["palabraWordix" => "huevo","jugador" => "migue1","intentos" => 2,"puntaje"=>13 ],
+        ["palabraWordix" => "tinto","jugador" => "clara","intentos" => 3,"puntaje"=>15 ],
+        ["palabraWordix" => "verde","jugador" => "clara2","intentos" => 4,"puntaje"=>13 ],
+        ["palabraWordix" => "melon","jugador" => "gordo1","intentos" => 5,"puntaje"=>11 ],
+        ["palabraWordix" => "yuyos","jugador" => "gordo2","intentos" => 6,"puntaje"=>12 ],
+        ["palabraWordix" => "pisos","jugador" => "diego","intentos" => 2,"puntaje"=>16 ],
+        ["palabraWordix" => "cebra","jugador" => "diego2","intentos" => 2,"puntaje"=>15 ]
+    ];
+    return $coleccionPartidas;
+}
+
+//consigna Nº3
+/**
+ * Esta función muestra el menú de opciones del juego
+ * @param arraystring $opciones
+ * @param int $key $opcion
+ * @return int $opcion
+ */
+function seleccionarOpcion(){
+    $opciones = [
+        "Jugar al Wordix con una palabra elegida \n",
+        "Jugar al Wordix con una palabra aleatoria \n",
+        "Mostrar una partida \n",
+        "Mostrar la primera partida ganadora \n",
+        "Mostrar resumen de Jugador \n",
+        "Mostrar listado de partidas ordenadas por jugador y por palabra \n",
+        "Agregar una palabra de 5 letras a Wordix \n",
+        "Salir \n",
+    ];
+    echo "Menu de opciones:"."\n";
+    foreach($opciones as $key => $opcion){
+        echo ($key + 1). ") " . $opcion."\n";
+
+    }
+    do{
+        echo "Ingrese el número de la opción deseada: ";
+        $eleccion = trim(fgets(STDIN));
+        if($eleccion < 1 || $eleccion > count($opciones)){
+            echo "Opción no válida. Pruebe otra opción"."\n";
+        }
+    }while($eleccion < 1 || $eleccion > count($opciones));
+ return $eleccion;
+}
+
+$opcion = seleccionarOpcion();
+echo "Has seleccionado la opción " . $opcion . "\n";
+
+//consigna Nº4 case 7
+/**
+ * La función solicita ingresar una palabra de 5 letras 
+ * @param string $palabra5Letras
+ * @return string $palabra5Letras
+ */
+//leerPalabra5Letras()
+
+//nr5
+//solicitarNumeroEntre($min, $max)                                     //cual de las 2 5 uso clara?
+/**
+ * Esta función solicita un número entre un rango de valores
+ * @param int $numero $numeroCorrecto $valor 
+ * @return int $numeroCorreto
+ */
+
+
+//consigna Nº5
+function numeroCorrecto($rangoValores){
+    do{
+    echo "Ingrese un numero: ";
+    $numero = trim(fgets(STDIN));
+    $numeroCorrecto = 0;
+
+    foreach($rangoValores as $valor){
+        if($numero == $valor){
+            $numeroCorrecto = $numero;
+        }   
+    }  
+    }while(!$numeroCorrecto); 
+    return $numeroCorrecto;
+}
+
+$rangoValores = array(1,5,4,2,3);
+$aux=numeroCorrecto($rangoValores);
+
+echo $aux;
+
+//consigna Nº6
+/**
+ * La función muestra los datos de una partida según un número ingresado
+ * @param int $partidaAux 
+ * @param array $datosPartidas
+ */
+
+ function mostrarDatosPartida($nroPartida, $datosPartidas){
+    $partidaAux = $datosPartidas[$nroPartida - 1];
+    echo "****************"."\n";
+    echo "partida wordix " . $nroPartida . ":" . "palabra" . $partidaAux["palabraWordix"]."\n";
+    echo "jugador:" . $partidaAux["jugador"]."\n";
+    echo "puntaje:" . $partidaAux["puntaje"]."\n";
+    if($partidaAux["intentos"] == 0){
+        echo "Intento: No adivinó la palabra"."\n";
+    }
+    else{
+        echo "Intento: Encontro la palabra"."\n";
+    }
+}
+
+//consigna Nº7
+$palabrasGuardadas = [                       
+    "MUJER", "QUESO", "FUEGO", "CASAS", "RASGO",
+    "GATOS", "GOTAS", "HUEVO", "TINTO", "NAVES",
+    "VERDE", "MELON", "YUYOS", "PIANO", "PISOS",
+    "CEBRA", "MANGO", "LINCE", "FLAMA", "GRANO"];
+
+function agregarPalabra($palabrasGuardadas,$palabra){
+    $coleccionModificada = array_push ($palabrasGuardadas,$palabra);
+    return $coleccionModificada;
+}
+
+//consigna Nº8
+$coleccionPartidas =[
+    ["palabraWordix" => "queso","jugador" => "majo","intentos" => 0,"puntaje"=>0 ],
+    ["palabraWordix" => "casas","jugador" => "rudolf","intentos" => 3,"puntaje"=>14 ],
+    ["palabraWordix" => "queso","jugador" => "pink2000","intentos" => 6,"puntaje"=>10 ],
+    ["palabraWordix" => "mujer","jugador" => "migue","intentos" => 1,"puntaje"=>15 ],
+    ["palabraWordix" => "huevo","jugador" => "migue1","intentos" => 2,"puntaje"=>13 ],
+    ["palabraWordix" => "tinto","jugador" => "clara","intentos" => 3,"puntaje"=>15 ],
+    ["palabraWordix" => "verde","jugador" => "clara2","intentos" => 4,"puntaje"=>13 ],
+    ["palabraWordix" => "melon","jugador" => "gordo1","intentos" => 5,"puntaje"=>11 ],
+    ["palabraWordix" => "yuyos","jugador" => "gordo2","intentos" => 6,"puntaje"=>12 ],
+    ["palabraWordix" => "pisos","jugador" => "diego","intentos" => 2,"puntaje"=>16 ],
+    ["palabraWordix" => "cebra","jugador" => "diego2","intentos" => 2,"puntaje"=>15 ]
+];
+
+function nombre($coleccionPartidas,$nombre){
+    $resultado = -1;
+    foreach($coleccionPartidas as $llave => $partidasGuardadas ){
+        if($partidasGuardadas["jugador"]== $nombre && $partidasGuardadas["intentos"] > 0){
+            $resultado = $llave;
+        }
+}
+        return $resultado;
+} 
