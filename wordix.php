@@ -122,6 +122,7 @@ function escribirSegunEstado($texto, $estado)
 }
 
 /**
+ * La función escribe un mensaje de bienvenida al jugador
  *@param string $usuario
  */
 function escribirMensajeBienvenida($usuario)
@@ -135,7 +136,7 @@ function escribirMensajeBienvenida($usuario)
 
 
 /**
- *
+ * Verifica si la palabra ingresada esta conformada solo por letras
  * @param $cadena
  * @return boolean
  */
@@ -153,7 +154,8 @@ function esPalabra($cadena)
 }
 
 /**
- *
+ * Lee una palabra de 5 letras desde la entrada (teclado)
+ * @param string $palabra
  * @return string
  */
 function leerPalabra5Letras()
@@ -244,7 +246,7 @@ function imprimirIntentosWordix($estructuraIntentosWordix)
         }
         echo "\n";
     }
-    //echo "\n" . "Le quedan " . $cantIntentosFaltantes . " Intentos para adivinar la palabra!";
+    echo "\n" . "Le quedan " . $cantIntentosFaltantes . " Intentos para adivinar la palabra!";
 }
 
 /**
