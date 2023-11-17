@@ -26,6 +26,7 @@ const ESTADO_LETRA_PERTENECE = "pertenece";
 /** DEFINICION DE FUNCIONES ***/
 /**************/
 
+//CONSIGNA Nº5
 /**
  * solicita el numero ,minimo y maximo
  *@param int $min,$max
@@ -153,6 +154,7 @@ function esPalabra($cadena)
     return $esLetra;
 }
 
+//CONSIGNA Nº4
 /**
  * Lee una palabra de 5 letras desde la entrada (teclado)
  * @param string $palabra
@@ -246,7 +248,7 @@ function imprimirIntentosWordix($estructuraIntentosWordix)
         }
         echo "\n";
     }
-    echo "\n" . "Le quedan " . $cantIntentosFaltantes . " Intentos para adivinar la palabra!";
+    //echo "\n" . "Le quedan " . $cantIntentosFaltantes . " Intentos para adivinar la palabra!";
 }
 
 /**
@@ -424,14 +426,14 @@ function jugarWordix($palabraWordix, $nombreUsuario)
     return $partida;
 }
 
+/***********************************************/
+//FUNCIONES DEL EQUIPO DE DESARROLLO 
+/***********************************************/
 
-/*
-FUNCIONES DEL EQUIPO DE DESARROLLO 
-*/
 
-//consigna Nº2
+//CONSIGNA Nº2 - ESTRUCTURA DE DATOS B
 /**
- * Esta función muestra una estructura de datos con ejemplos de partidas ya jugadas 
+ * Esta función muestra una estructura de datos con ejemplos de partidas ya jugadas.
  * @param array multidimensional $coleccionPartidas
  * @return array multidimensional $coleccionPartidas
  */
@@ -451,8 +453,29 @@ function cargarPartidas(){
     ];
     return $coleccionPartidas;
 }
+//ESTRUCTURA DE DATOS C
+/**
+ * Esta funcion muestra resumenes de partidas de Jugadores ya jugadas.
+ * @return array
+ */
+function cargarResumenJugadores (){
+    $resumenJugador = [
+        ["Jugador" => "majo","partidas" => 0, "puntaje" => 0, "victoria" => 0, "intento1" => 0, "intento2" => 0,"intento3" => 0,"intento4" => 0, "intento5" =>  0, "intento6" => 0],
+        ["Jugador" => "rudolf" ,"partidas" => 1, "puntaje" => 14, "victoria" => 1, "intento1" => 2, "intento2" => 1,"intento3" => 2,"intento4" => 0, "intento5" => 0, "intento6" => 0],
+        ["Jugador" => "pink2000","partidas" => 1, "puntaje" => 10, "victoria" => 1, "intento1" => 1, "intento2" => 1,"intento3" => 1,"intento4" => 1, "intento5" => 1, "intento6" => 1],
+        ["Jugador" => "migue","partidas" => 1, "puntaje" => 15, "victoria" => 1, "intento1" => 5, "intento2" => 0,"intento3" => 0,"intento4" => 0, "intento5" => 0, "intento6" => 0],
+        ["Jugador" => "migue1","partidas" => 1, "puntaje" => 13, "victoria" => 1, "intento1" => 3, "intento2" => 2,"intento3" => 0,"intento4" => 0, "intento5" => 0, "intento6" => 0],
+        ["Jugador" => "clara","partidas" => 1, "puntaje" => 15, "victoria" => 1, "intento1" => 2, "intento2" => 2,"intento3" => 1,"intento4" => 0, "intento5" => 0, "intento6" => 0],
+        ["Jugador" => "clara2","partidas" => 1, "puntaje" => 13, "victoria" => 1, "intento1" => 1, "intento2" => 1,"intento3" => 1,"intento4" => 2, "intento5" => 0, "intento6" => 0],
+        ["Jugador" => "gordo1","partidas" => 1, "puntaje" => 11, "victoria" => 1, "intento1" => 1, "intento2" => 0,"intento3" => 2,"intento4" => 2, "intento5" => 0, "intento6" => 0],
+        ["Jugador" => "gordo2","partidas" => 1, "puntaje" => 12, "victoria" => 1, "intento1" => 1, "intento2" => 1,"intento3" => 0,"intento4" => 1, "intento5" => 1, "intento6" => 1],
+        ["Jugador" => "diego","partidas" => 1, "puntaje" => 16, "victoria" => 1, "intento1" => 3, "intento2" => 2,"intento3" => 0,"intento4" => 0, "intento5" => 0, "intento6" => 0],
+        ["Jugador" => "diego2","partidas" => 1, "puntaje" => 15, "victoria" => 1, "intento1" => 5, "intento2" => 0,"intento3" => 0,"intento4" => 0, "intento5" => 0, "intento6" => 0],    
+    ];
+    return($resumenJugador);
+}
 
-//consigna Nº3
+//CONSIGNA Nº3
 /**
  * Esta función muestra el menú de opciones del juego
  * @param arraystring $opciones
@@ -485,27 +508,7 @@ function seleccionarOpcion(){
  return $eleccion;
 }
 
-$opcion = seleccionarOpcion();
-echo "Has seleccionado la opción " . $opcion . "\n";
-
-//consigna Nº4 case 7
-/**
- * La función solicita ingresar una palabra de 5 letras 
- * @param string $palabra5Letras
- * @return string $palabra5Letras
- */
-//leerPalabra5Letras()
-
-//nr5
-//solicitarNumeroEntre($min, $max)                                     //cual de las 2 5 uso clara?
-/**
- * Esta función solicita un número entre un rango de valores
- * @param int $numero $numeroCorrecto $valor 
- * @return int $numeroCorreto
- */
-
-
-//consigna Nº5
+//CONSIGNA Nº5
 function numeroCorrecto($rangoValores){
     do{
     echo "Ingrese un numero: ";
@@ -521,65 +524,117 @@ function numeroCorrecto($rangoValores){
     return $numeroCorrecto;
 }
 
-$rangoValores = array(1,5,4,2,3);
-$aux=numeroCorrecto($rangoValores);
-
-echo $aux;
-
-//consigna Nº6
+//CONSIGNA Nº6
 /**
  * La función muestra los datos de una partida según un número ingresado
  * @param int $partidaAux 
  * @param array $datosPartidas
  */
-
  function mostrarDatosPartida($nroPartida, $datosPartidas){
     $partidaAux = $datosPartidas[$nroPartida - 1];
+
     echo "****************"."\n";
-    echo "partida wordix " . $nroPartida . ":" . "palabra" . $partidaAux["palabraWordix"]."\n";
-    echo "jugador:" . $partidaAux["jugador"]."\n";
-    echo "puntaje:" . $partidaAux["puntaje"]."\n";
+    echo "Partida WORDIX " . $nroPartida . ":" . "palabra " . strtoupper($partidaAux["palabraWordix"])."\n";
+    echo "Jugador:" . $partidaAux["jugador"]."\n";
+    echo "Puntaje:" . $partidaAux["puntaje"]."\n";
     if($partidaAux["intentos"] == 0){
-        echo "Intento: No adivinó la palabra"."\n";
+        echo "Intento: No adivinó la palabra."."\n";
     }
     else{
         echo "Intento: Encontro la palabra"."\n";
     }
+    echo "****************"."\n";
 }
 
-//consigna Nº7
-$palabrasGuardadas = [                       
-    "MUJER", "QUESO", "FUEGO", "CASAS", "RASGO",
-    "GATOS", "GOTAS", "HUEVO", "TINTO", "NAVES",
-    "VERDE", "MELON", "YUYOS", "PIANO", "PISOS",
-    "CEBRA", "MANGO", "LINCE", "FLAMA", "GRANO"];
-
+//CONSIGNA Nº7
+/**
+ * Obtener una coleccion modificada de palabras incluyendo a la palabra dada.
+ * @param array $palabrasGuardadas
+ * @param string $palabra
+ * @param array
+ */
 function agregarPalabra($palabrasGuardadas,$palabra){
     $coleccionModificada = array_push ($palabrasGuardadas,$palabra);
+
     return $coleccionModificada;
 }
 
-//consigna Nº8
-$coleccionPartidas =[
-    ["palabraWordix" => "queso","jugador" => "majo","intentos" => 0,"puntaje"=>0 ],
-    ["palabraWordix" => "casas","jugador" => "rudolf","intentos" => 3,"puntaje"=>14 ],
-    ["palabraWordix" => "queso","jugador" => "pink2000","intentos" => 6,"puntaje"=>10 ],
-    ["palabraWordix" => "mujer","jugador" => "migue","intentos" => 1,"puntaje"=>15 ],
-    ["palabraWordix" => "huevo","jugador" => "migue1","intentos" => 2,"puntaje"=>13 ],
-    ["palabraWordix" => "tinto","jugador" => "clara","intentos" => 3,"puntaje"=>15 ],
-    ["palabraWordix" => "verde","jugador" => "clara2","intentos" => 4,"puntaje"=>13 ],
-    ["palabraWordix" => "melon","jugador" => "gordo1","intentos" => 5,"puntaje"=>11 ],
-    ["palabraWordix" => "yuyos","jugador" => "gordo2","intentos" => 6,"puntaje"=>12 ],
-    ["palabraWordix" => "pisos","jugador" => "diego","intentos" => 2,"puntaje"=>16 ],
-    ["palabraWordix" => "cebra","jugador" => "diego2","intentos" => 2,"puntaje"=>15 ]
-];
-
-function nombre($coleccionPartidas,$nombre){
+//CONSIGNA Nº8
+/**
+ * Dada una coleccion de partidas y nombre del Jugador, mostrar la primera partida GANADA.
+ * @param array $coleccionPartidas
+ * @param string $nombre
+ * @return int
+ */
+function partidaGanada($coleccionPartidas,$nombre){
     $resultado = -1;
     foreach($coleccionPartidas as $llave => $partidasGuardadas ){
         if($partidasGuardadas["jugador"]== $nombre && $partidasGuardadas["intentos"] > 0){
             $resultado = $llave;
         }
-}
-        return $resultado;
+    }
+
+    return $resultado;
 } 
+
+//CONSIGNA Nº9 (BIS)
+/**
+ * Escribe en patalla el resumen de la partida de un jugador.
+ * @param array $resumenJugador
+ */
+function imprimirResumenJugador ($resumenJugador, $jugador){
+    echo "***************************************************\n";
+    echo "Jugador:", escribirAmarillo($jugador),"\n";
+    echo "Partidas:", $resumenJugador ["partidas"],"\n";
+    echo "Puntaje Total:", $resumenJugador["puntaje"], "\n";
+    echo "Victorias:",$resumenJugador["victoria"], "\n";
+    echo "Porcentaje Victorias: \n";
+    echo "Adivinadas:\n";
+    echo "        Intento 1 :", $resumenJugador["intento1"], "\n";
+    echo "        Intento 2 :", $resumenJugador["intento2"], "\n";
+    echo "        Intento 3 :", $resumenJugador["intento3"], "\n";
+    echo "        Intento 4 :", $resumenJugador["intento4"], "\n";
+    echo "        Intento 5 :", $resumenJugador["intento5"], "\n";
+    echo "        Intento 6 :", $resumenJugador["intento6"], "\n";
+    echo "***************************************************\n";
+}
+
+//CONSIGNA Nº9
+/**
+ * Dado una coleccion de resumen de Jugadores, y un jugador, cargar el resumen del mismo.
+ * @param array $resumenJugador
+ * @param string $jugador
+ * @return string
+ */
+function resumenJugador ($resumenJugador, $jugador){
+
+    foreach ($resumenJugador as $partidaJugador){
+        if($partidaJugador["Jugador"] == $jugador){
+            $partidaDelJugador = imprimirResumenJugador($partidaJugador, $jugador);
+        }
+    }
+
+    if($partidaJugador["Jugador"] !== $jugador){
+        $mensaje = escribirRojo("NO SE ENCONTRO RESUMEN DEL JUGADOR: $jugador\n");
+        $partidaDelJugador = $mensaje;
+    }
+
+    return ($partidaDelJugador);
+}
+
+//CONSIGNA Nº10
+/**
+ * Solicita el nombre del jugador y convierte a string las veces nescesarias con la condicion que el primer caracter del nombre sea una letra.
+ * @return string
+ */
+function solicitarJugador (){
+    do{
+        echo "Ingrese el nombre del Jugador:";
+        $nombreUsuario = trim(fgets(STDIN));
+        //strtolower >> convierte el nombre en minusculas
+        $nombreUsuario = strtolower($nombreUsuario);
+    }while (!ctype_alpha($nombreUsuario [0]));
+    //cyte_alpha >> verifica sin los caracteres nombrados sean de tipo string
+
+    return ($nombreUsuario);
+}
