@@ -431,49 +431,6 @@ function jugarWordix($palabraWordix, $nombreUsuario)
 /***********************************************/
 
 
-//CONSIGNA Nº2 - ESTRUCTURA DE DATOS B
-/**
- * Esta función muestra una estructura de datos con ejemplos de partidas ya jugadas.
- * @param array multidimensional $coleccionPartidas
- * @return array multidimensional $coleccionPartidas
- */
-function cargarPartidas(){
-    $coleccionPartidas =[
-        ["palabraWordix" => "queso","jugador" => "majo","intentos" => 0,"puntaje"=>0 ],
-        ["palabraWordix" => "casas","jugador" => "rudolf","intentos" => 3,"puntaje"=>14 ],
-        ["palabraWordix" => "queso","jugador" => "pink2000","intentos" => 6,"puntaje"=>10 ],
-        ["palabraWordix" => "mujer","jugador" => "migue","intentos" => 1,"puntaje"=>15 ],
-        ["palabraWordix" => "huevo","jugador" => "migue1","intentos" => 2,"puntaje"=>13 ],
-        ["palabraWordix" => "tinto","jugador" => "clara","intentos" => 3,"puntaje"=>15 ],
-        ["palabraWordix" => "verde","jugador" => "clara2","intentos" => 4,"puntaje"=>13 ],
-        ["palabraWordix" => "melon","jugador" => "gordo1","intentos" => 5,"puntaje"=>11 ],
-        ["palabraWordix" => "yuyos","jugador" => "gordo2","intentos" => 6,"puntaje"=>12 ],
-        ["palabraWordix" => "pisos","jugador" => "diego","intentos" => 2,"puntaje"=>16 ],
-        ["palabraWordix" => "cebra","jugador" => "diego2","intentos" => 2,"puntaje"=>15 ]
-    ];
-    return $coleccionPartidas;
-}
-//ESTRUCTURA DE DATOS C
-/**
- * Esta funcion muestra resumenes de partidas de Jugadores ya jugadas.
- * @return array
- */
-function cargarResumenJugadores (){
-    $resumenJugador = [
-        ["Jugador" => "majo","partidas" => 0, "puntaje" => 0, "victoria" => 0, "intento1" => 0, "intento2" => 0,"intento3" => 0,"intento4" => 0, "intento5" =>  0, "intento6" => 0],
-        ["Jugador" => "rudolf" ,"partidas" => 1, "puntaje" => 14, "victoria" => 1, "intento1" => 2, "intento2" => 1,"intento3" => 2,"intento4" => 0, "intento5" => 0, "intento6" => 0],
-        ["Jugador" => "pink2000","partidas" => 1, "puntaje" => 10, "victoria" => 1, "intento1" => 1, "intento2" => 1,"intento3" => 1,"intento4" => 1, "intento5" => 1, "intento6" => 1],
-        ["Jugador" => "migue","partidas" => 1, "puntaje" => 15, "victoria" => 1, "intento1" => 5, "intento2" => 0,"intento3" => 0,"intento4" => 0, "intento5" => 0, "intento6" => 0],
-        ["Jugador" => "migue1","partidas" => 1, "puntaje" => 13, "victoria" => 1, "intento1" => 3, "intento2" => 2,"intento3" => 0,"intento4" => 0, "intento5" => 0, "intento6" => 0],
-        ["Jugador" => "clara","partidas" => 1, "puntaje" => 15, "victoria" => 1, "intento1" => 2, "intento2" => 2,"intento3" => 1,"intento4" => 0, "intento5" => 0, "intento6" => 0],
-        ["Jugador" => "clara2","partidas" => 1, "puntaje" => 13, "victoria" => 1, "intento1" => 1, "intento2" => 1,"intento3" => 1,"intento4" => 2, "intento5" => 0, "intento6" => 0],
-        ["Jugador" => "gordo1","partidas" => 1, "puntaje" => 11, "victoria" => 1, "intento1" => 1, "intento2" => 0,"intento3" => 2,"intento4" => 2, "intento5" => 0, "intento6" => 0],
-        ["Jugador" => "gordo2","partidas" => 1, "puntaje" => 12, "victoria" => 1, "intento1" => 1, "intento2" => 1,"intento3" => 0,"intento4" => 1, "intento5" => 1, "intento6" => 1],
-        ["Jugador" => "diego","partidas" => 1, "puntaje" => 16, "victoria" => 1, "intento1" => 3, "intento2" => 2,"intento3" => 0,"intento4" => 0, "intento5" => 0, "intento6" => 0],
-        ["Jugador" => "diego2","partidas" => 1, "puntaje" => 15, "victoria" => 1, "intento1" => 5, "intento2" => 0,"intento3" => 0,"intento4" => 0, "intento5" => 0, "intento6" => 0],    
-    ];
-    return($resumenJugador);
-}
 
 //CONSIGNA Nº3
 /**
@@ -548,15 +505,35 @@ function numeroCorrecto($rangoValores){
 
 //CONSIGNA Nº7
 /**
- * Obtener una coleccion modificada de palabras incluyendo a la palabra dada.
- * @param array $palabrasGuardadas
+ * La función agrega la nueva palabra a la colección si es diferente
+ *
+ * @param array $coleccionPalabras
  * @param string $palabra
- * @param array
+ * @return array La colección modificada
  */
-function agregarPalabra($palabrasGuardadas,$palabra){
-    $coleccionModificada = array_push ($palabrasGuardadas,$palabra);
+function agregarPalabra($coleccionPalabras, $palabra) {
+    // Bandera para indicar si la palabra ya está en la colección
+    $palabraRepetida = false;
 
-    return $coleccionModificada;
+    // Verifica si la palabra ya está en la colección
+    foreach ($coleccionPalabras as $palabraGuardada) {
+        if ($palabraGuardada === $palabra) {
+            // La palabra ya está en la colección
+            $palabraRepetida = true;
+            break;
+        }
+    }
+
+    // Si la palabra no está en la colección, agrégala
+    if (!$palabraRepetida) {
+        array_push($coleccionPalabras, $palabra);
+        echo "Palabra agregada con éxito.\n";
+    } else {
+        echo "La palabra ya está en la colección. Por favor, ingresa otra palabra.\n";
+    }
+
+    // Retorna la colección modificada
+    return $coleccionPalabras;
 }
 
 //CONSIGNA Nº8
@@ -675,7 +652,7 @@ usort($coleccionPartidas, 'miComparacion');
 
 // Imprimir las partidas ordenadas con índices comenzando en 1
 
-$
+
 $indice = 1;
 foreach ($coleccionPartidas as $partida) { //recorrido exhaustivo para mostrar todas
     echo "Lugar: $indice\n";
