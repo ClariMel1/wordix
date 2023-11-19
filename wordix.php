@@ -524,7 +524,11 @@ function numeroCorrecto($rangoValores){
  * La función agrega la nueva palabra a la colección si es diferente
  *
  * @param array $coleccionPalabras
+ * La función agrega la nueva palabra a la colección si es diferente
+ *
+ * @param array $coleccionPalabras
  * @param string $palabra
+ * @return array La colección modificada
  * @return array La colección modificada
  */
 function agregarPalabra($coleccionPalabras, $palabra) {
@@ -689,7 +693,7 @@ usort($coleccionPartidas, 'miComparacion');
 
 // Imprimir las partidas ordenadas con índices comenzando en 1
 
-$
+
 $indice = 1;
 foreach ($coleccionPartidas as $partida) { //recorrido exhaustivo para mostrar todas
     echo "Lugar: $indice\n";

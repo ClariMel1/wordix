@@ -95,6 +95,10 @@ do {
             print_r ($partida);
             break;
         case 2: 
+            "ingrese su nombre:";
+            $nombre =trim(fgets(STDIN));
+            $variable=palabraAleatoria($coleccionPalabras,$nombre);
+
             break;
         case 3:
             echo "Ingrese Nro de partida:";
@@ -130,13 +134,20 @@ do {
             $cargarResumen = cargarResumenJugadores();
             $resultado = resumenJugador($cargarResumen, $nombreJugador);
             echo $resultado;
+        case 5:
+            $nombreJugador = solicitarJugador();
+            $cargarResumen = cargarResumenJugadores();
+            $resultado = resumenJugador($cargarResumen, $nombreJugador);
+            echo $resultado;
             break;
         case 6:
             //aa
             break;
         case 7:
-            $palabra = leerPalabra5Letras();
-            print_r(agregarPalabra(cargarColeccionPalabras(), $palabra));  
+            $palabraNueva = leerPalabra5Letras();
+            $coleccPalabras = cargarColeccionPalabras();
+            $coleccionModificada = agregarPalabra($coleccionPalabras, $palabra);
+            print_r ($coleccionModificada);
             break;
     }
 } while ($opcion !=8);
