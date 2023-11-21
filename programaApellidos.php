@@ -1,8 +1,6 @@
 <?php
 include_once("wordix.php");
 
-
-
 /******/
 /* DATOS DE LOS INTEGRANTES ***/
 /******/
@@ -12,7 +10,11 @@ include_once("wordix.php");
 - CLARA PELOZO - legajos 4938 - mail:clara.pelozo@est.fi.uncoma.edu.ar - github:ClariMel1
 /*
 
+/************************************/
+/* DEFINICION DE FUNCIONES **/
+/***********************************/
 
+//CONSIGNA Nº1 - ESTRUCTURA DE DATOS A
 /**
  * Obtiene una colección de palabras
  * @return array
@@ -33,7 +35,8 @@ function cargarColeccionPalabras()
  * @param array multidimensional $coleccionPartidas
  * @return array multidimensional $coleccionPartidas
  */
-function cargarPartidas(){
+function cargarPartidas()
+{
     $coleccionPartidas =[
         ["palabraWordix" => "queso","jugador" => "majo","intentos" => 0,"puntaje"=>0 ],
         ["palabraWordix" => "casas","jugador" => "rudolf","intentos" => 3,"puntaje"=>14 ],
@@ -49,12 +52,14 @@ function cargarPartidas(){
     ];
     return $coleccionPartidas;
 }
+
 //ESTRUCTURA DE DATOS C
 /**
  * Esta funcion muestra resumenes de partidas de Jugadores ya jugadas.
  * @return array
  */
-function cargarResumenJugadores (){
+function cargarResumenJugadores ()
+{
     $resumenJugador = [
         ["Jugador" => "majo","partidas" => 0, "puntaje" => 0, "victoria" => 0, "intento1" => 0, "intento2" => 0,"intento3" => 0,"intento4" => 0, "intento5" =>  0, "intento6" => 0],
         ["Jugador" => "rudolf" ,"partidas" => 1, "puntaje" => 14, "victoria" => 1, "intento1" => 2, "intento2" => 1,"intento3" => 2,"intento4" => 0, "intento5" => 0, "intento6" => 0],
@@ -71,22 +76,20 @@ function cargarResumenJugadores (){
     return($resumenJugador);
 }
 
-
-/******/
-/* DEFINICION DE FUNCIONES **/
-/******/
-
 /***********************************/
 /** PROGRAMA PRINCIPAL **/
 /***********************************/
 
+//Inicialización de variables:
+
+//Proceso:
 do {
     $opcion = seleccionarOpcion();
     
     switch ($opcion) {
         case 1: 
-            $max = 20;
             $min = 0;
+            $max = count($coleccPalabras) - 1;
             $nombreJugador = solicitarJugador();
             $numero = solicitarNumeroEntre ($min, $max);
             $coleccPalabras = cargarColeccionPalabras();
@@ -95,10 +98,11 @@ do {
             print_r ($partida);
             break;
         case 2: 
-            "ingrese su nombre:";
-            $nombre =trim(fgets(STDIN));
-            $variable=palabraAleatoria($coleccionPalabras,$nombre);
-
+            $nombreJugador = solicitarJugador();
+            $coleccPalabras = cargarColeccionPalabras();
+            $cargarPartidas = cargarPartidas();
+            $palabraAleatoria = palabraAleatoria($nombreJugador,$coleccPalabras,$cargarPartidas);
+            $partidaJugador = jugarWordix($palabraAleatoria, $nombreJugador);
             break;
         case 3:
             echo "Ingrese Nro de partida:";
@@ -152,13 +156,8 @@ do {
     }
 } while ($opcion !=8);
 
-
-
-//Proceso:
-
 //$partida = jugarWordix("MELON", strtolower("MaJo"));
 //print_r($partida);
 //imprimirResultado($partida);
 
-
-
+?>
