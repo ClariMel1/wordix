@@ -597,10 +597,11 @@ do {
 
         case 7:
             $palabra = leerPalabra5Letras();
-            $registroPalabras = cargarColeccionPartidas();
+            $coleccionModificada[] = $palabra;
+            $registroPalabras = cargarColeccionPalabras();
             $i=0;
 
-            $palabraExiste = palabraExistente($registroPalabras,$palabra);
+            $palabraExiste = palabraExistente($registroPalabras,$registroPalabras);
             if($palabraExiste){
                 echo "la palabra ingresada ya esta registrada:";
             }
