@@ -113,11 +113,6 @@ function cargarResumenJugadores ()
 }
 
 
-
-
-
-
-
 /***********************************/
 //FUNCIONES DEL EQUIPO DE DESARROLLO 
 /***********************************/
@@ -162,35 +157,7 @@ function seleccionarOpcion()
     return $eleccion;
 }
 
-//CONSIGNA Nº5
-/**
- * solicita al usuario un número entre un rango de valores. Si el número ingresado por el usuario no es válido
- * la función se encarga de volver a pedirlo. La función retorna un número válido.
- * @param array $rangoValores
- * @return int
- */
-/*
-function numeroCorrecto($rangoValores)
-{
-    //int $numero,$numeroCorrecto
-    
-    //repetitiva para encontrar el numero correcto,hasta no hallarlo no retorna
-    do{
-        echo "Ingrese un numero: ";
-        $numero = trim(fgets(STDIN));
-        $numeroCorrecto = 0;
-        
-        //Recorrido Exhaustivo busca dentro del array algun valor que sea igual al numero,cuando lo sea es el numero correcto
-        foreach($rangoValores as $valor){
-            if($numero == $valor){
-                $numeroCorrecto = $numero;
-            }
-        }     
-    }while(!$numeroCorrecto); 
 
-    return $numeroCorrecto;
-}
-*/
 //CONSIGNA Nº6
 /**
  * Una función que dado un número de partida, muestre en pantalla los datos de la partida
@@ -281,14 +248,11 @@ function partidaGanada($coleccionPartidas,$nombre)
  * @param string $jugador
  */
 function imprimirResumenJugador ($resumenJugador, $jugador){
-    $cantVictorias = 0;
-    $cantPartidas = 0;
-    $porcentajeVictorias = 0;
-    
-    if ($jugador == $resumenJugador ["Jugador"]){
     $cantVictorias = $resumenJugador["victoria"];
     $cantPartidas = $resumenJugador["partidas"];
     $porcentajeVictorias = (100 * $cantVictorias) / $cantPartidas;
+    
+
     // mostrar en pantalla un resumen de las estadísticas de un jugador en el juego.
     echo "******************************************\n";
     echo "Jugador:", escribirAmarillo($jugador),"\n";
@@ -304,44 +268,65 @@ function imprimirResumenJugador ($resumenJugador, $jugador){
     echo "        Intento 5 :", $resumenJugador["intento5"], "\n";
     echo "        Intento 6 :", $resumenJugador["intento6"], "\n";
     echo "*****************************************\n";
-    }
 }
+
 
 //CONSIGNA Nº9
 /**
- * Dado una coleccion de resumen de Jugadores, y un jugador, cargar el resumen del mismo.
- * @param array $resumenJugador
+ * Dado el nombre de un jugador, en caso de que ya haya jugado, mostrar el resumen de todas sus partidas.
  * @param string $jugador
- * @return string 
+ * @param array $coleccionPartidas
  */
-/*
-function resumenJugador($resumenJugador, $jugador)
+function calcularResumenJugador ($jugador, $coleccionPartidas)
 {
-    // Inicializar la variable para el resumen del jugador
-    $partidaDelJugador = '';
+    $cantPartidas = 0; //variables contadoras
+    $cantVictorias = 0;
+    $intentos1 = 0;
+    $intentos2 = 0;
+    $intentos3 = 0;
+    $intentos4 = 0;
+    $intentos5 = 0;
+    $intentos6 = 0;
+    $sumaPuntajes = 0; //variable acomuladora
+    $encontroAlJugador = false;
 
-    // Bandera para indicar si se encontró el jugador
-    $jugadorEncontrado = false;
-
-    // Recorrido exhaustivo para obtener el resumen del jugador si se encuentra
-    foreach ($resumenJugador as $partidaJugador) {
-        if ($partidaJugador["Jugador"] == $jugador) {
-            $partidaDelJugador = imprimirResumenJugador($partidaJugador, $jugador);
-            $jugadorEncontrado = true;
-            // Terminar el bucle si se encuentra el jugador
-            break;
+    for ($i = 0; $i < count($coleccionPartidas); $i++){
+        if ($coleccionPartidas[$i]["jugador"] == $jugador){
+            $encontroAlJugador = true;
+            $cantPartidas = $cantPartidas + 1;
+            $sumaPuntajes = $sumaPuntajes + $coleccionPartidas[$i]["puntaje"];
+            if($coleccionPartidas[$i]["intentos"] > 0){
+                $cantVictorias = $cantVictorias + 1;
+            }
+            if ($coleccionPartidas[$i]["intentos"] == 1){
+                $intentos1 = $intentos1 + 1;
+            }elseif($coleccionPartidas[$i]["intentos"] == 2){
+                $intentos2 = $intentos2 + 1;
+            }elseif($coleccionPartidas[$i]["intentos"] == 3){
+                $intentos3 = $intentos3 + 1;
+            }elseif($coleccionPartidas[$i]["intentos"] == 4){
+                $intentos4 = $intentos4 + 1;
+            }elseif($coleccionPartidas[$i]["intentos"] == 5){
+                $intentos5 = $intentos5 + 1;
+            }elseif($coleccionPartidas[$i]["intentos"] == 6){
+                $intentos6 = $intentos6 + 1;
+            }
+            
         }
     }
 
-    // Mensaje en rojo si no se encontró el resumen del jugador
-    if (!$jugadorEncontrado) {
-        $mensaje = escribirRojo("NO SE ENCONTRÓ RESUMEN DEL JUGADOR: $jugador\n");
-        $partidaDelJugador = $mensaje;
+    if ($encontroAlJugador == true){
+        $resumenJugador =  ["Jugador" => $jugador, "partidas" => $cantPartidas, "puntaje" => $sumaPuntajes, "victoria" => $cantVictorias, "intento1" => $intentos1, "intento2" => $intentos2, "intento3" => $intentos3, "intento4" => $intentos4, "intento5" => $intentos5, "intento6" => $intentos6];
+        $resultadoFinal = imprimirResumenJugador($resumenJugador, $jugador);
+    }
+    if($encontroAlJugador !== true){
+        $mensaje = "NO SE ENCONTRÓ RESUMEN DEL JUGADOR: $jugador. \n";
+        $resultadoFinal = escribirRojo($mensaje)."\n";
     }
 
-    return $partidaDelJugador;
+    return($resultadoFinal);
 }
-*/
+
 //CONSIGNA Nº10
 /**
  * Solicita el nombre del jugador y convierte a string las veces nescesarias con la condicion que el primer caracter del nombre sea una letra.
@@ -379,7 +364,6 @@ function miComparacion($elemento1, $elemento2)
         return strcmp($elemento1["palabraWordix"], $elemento2["palabraWordix"]);
     }
 }
-
 
 //OPCION Nº2 DEL MENU DE OPCIONES
 /**
@@ -442,59 +426,6 @@ function palabraExistente($registroPalabras,$palabraNueva)
     return false;
 }
 
-//Nº5 CASE
-/**
- * Dado el nombre de un jugador, en caso de que ya haya jugado, mostrar el resumen de todas sus partidas.
- * @param string $jugador
- * @param array $coleccionPartidas
- */
-
- function calcularResumenJugador ($jugador, $coleccionPartidas){
-    $cantPartidas = 0; //variables contadoras
-    $cantVictorias = 0;
-    $intentos1 = 0;
-    $intentos2 = 0;
-    $intentos3 = 0;
-    $intentos4 = 0;
-    $intentos5 = 0;
-    $intentos6 = 0;
-    $sumaPuntajes = 0; //variable acomuladora
-    $encontroAlJugador = false;
-
-    for ($i = 0; $i < count($coleccionPartidas); $i++){
-        if ($coleccionPartidas[$i]["jugador"] == $jugador){
-            $encontroAlJugador = true;
-            $cantPartidas = $cantPartidas + 1;
-            $sumaPuntajes = $sumaPuntajes + $coleccionPartidas[$i]["puntaje"];
-            if($coleccionPartidas[$i]["intentos"] > 0){
-                $cantVictorias = $cantVictorias + 1;
-            }
-            if ($coleccionPartidas[$i]["intentos"] == 1){
-                $intentos1 = $intentos1 + 1;
-            }elseif($coleccionPartidas[$i]["intentos"] == 2){
-                $intentos2 = $intentos2 + 1;
-            }elseif($coleccionPartidas[$i]["intentos"] == 3){
-                $intentos3 = $intentos3 + 1;
-            }elseif($coleccionPartidas[$i]["intentos"] == 4){
-                $intentos4 = $intentos4 + 1;
-            }elseif($coleccionPartidas[$i]["intentos"] == 5){
-                $intentos5 = $intentos5 + 1;
-            }elseif($coleccionPartidas[$i]["intentos"] == 6){
-                $intentos6 = $intentos6 + 1;
-            }
-            
-        }
-    }
-
-    if ($encontroAlJugador == true){
-        $resumenJugador =  ["Jugador" => $jugador, "partidas" => $cantPartidas, "puntaje" => $sumaPuntajes, "victoria" => $cantVictorias, "intento1" => $intentos1, "intento2" => $intentos2, "intento3" => $intentos3, "intento4" => $intentos4, "intento5" => $intentos5, "intento6" => $intentos6];
-        return $resumenJugador;
-    }
-    if($encontroAlJugador !== true){
-        echo escribirRojo("NO SE ENCONTRÓ RESUMEN DEL JUGADOR: $jugador"), "\n";
-
-    }
-}
 
 
 /**********************/
@@ -538,11 +469,14 @@ do {
                 $datosPartida = mostrarDatosPartida($nroDePartida, $registroPartidas);
             }
         
-            while(!($nroDePartida >= 0 && $nroDePartida < count($registroPartidas))){
+            while($nroDePartida >= 0 && $nroDePartida > count($registroPartidas)) {
                 echo escribirRojo("El número de partida no existe; Ingrese otro número de partida: "). "\n";
-                $nroPartida = trim(fgets(STDIN));
-                if ($nroDePartida >= 0 && $nroDePartida < count($registroPartidas)) {
+                $nroDePartida = trim(fgets(STDIN));
+                $registroPartidas = cargarPartidas();
+            
+                if($nroDePartida >= 0 && $nroDePartida < count($registroPartidas)){
                     $datosPartida = mostrarDatosPartida($nroDePartida, $registroPartidas);
+                   
                 }
             }
 
@@ -562,12 +496,9 @@ do {
 
             break;
         case 5:
-
-            echo "Ingrese un nombre: ";
-            $jugador = trim(fgets(STDIN));
+            $nombreParticipante = solicitarNombreJugador();
             $registroPartidas = cargarPartidas();
-            $resplay = calcularResumenJugador($jugador, $registroPartidas);
-            $resultadoFinal = imprimirResumenJugador($resplay, $jugador);
+            $resplay = calcularResumenJugador($nombreParticipante, $registroPartidas);
             break;
         case 6:
 
