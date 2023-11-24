@@ -11,19 +11,32 @@ include_once("wordix.php");
 /*
 */
 
-$resumenesJugador = [ 
-    ["jugador" => "majo", "palabraWordix" => "queso"],
-    ["jugador" => "rudolf", "palabraWordix" => "casas"],
-    ["jugador" => "pink2000", "palabraWordix" => "queso"],
-    ["jugador" => "migue", "palabraWordix" => "mujer"],
-    ["jugador" => "migue1", "palabraWordix" => "huevo"],
-    ["jugador" => "clara", "palabraWordix" => "tinto"],
-    ["jugador" => "clara2", "palabraWordix" => "verde"],
-    ["jugador" => "gordo1", "palabraWordix" => "melon"],
-    ["jugador" => "gordo2", "palabraWordix" => "yuyos"],
-    ["jugador" => "diego", "palabraWordix" => "pisos"],
-    ["jugador" => "diego2", "palabraWordix" => "cebra"]   
-    ];
+$resumenesJugador =  
+        [ 
+        ["palabraWordix" => "QUESO","jugador" => "majo"],
+        ["palabraWordix" => "GOTAS","jugador" => "majo"],
+        ["palabraWordix" => "CASAS","jugador" => "rudolf"],
+        ["palabraWordix" => "QUESO","jugador" => "pink2000"],
+        ["palabraWordix" => "TINTO","jugador" => "clara"],
+        ["palabraWordix" => "MUJER","jugador" => "migue"],
+        ["palabraWordix" => "PISOS","jugador" => "diego"],
+        ["palabraWordix" => "GATOS","jugador" => "pink2000"],
+        ["palabraWordix" => "MANGO","jugador" => "rudolf"],
+        ["palabraWordix" => "MELON","jugador" => "gordo"],
+        ["palabraWordix" => "VERDE","jugador" => "clara"],
+        ["palabraWordix" => "YUYOS","jugador" => "majo"],
+        ["palabraWordix" => "CEBRA","jugador" => "diego"],
+        ["palabraWordix" => "RASGO","jugador" => "gordo"],
+        ["palabraWordix" => "LINCE","jugador" => "pink2000"],
+        ["palabraWordix" => "FUEGO","jugador" => "diego"],
+        ["palabraWordix" => "FLAMA","jugador" => "pink2000"],
+        ["palabraWordix" => "GRANO","jugador" => "diego"],
+        ["palabraWordix" => "HUEVO","jugador" => "migue"],
+        ["palabraWordix" => "YUYOS","jugador" => "migue"],
+        ["palabraWordix" => "PIANO","jugador" => "clara"],
+        ["palabraWordix" => "NAVES","jugador" => "clara"],
+        ["palabraWordix" => "MANGO","jugador" => "diego"]
+        ];
 
 //CONSIGNA Nº1 - ESTRUCTURA DE DATOS A
 /**
@@ -73,7 +86,7 @@ function cargarPartidas()
         ["palabraWordix" => "NAVES","jugador" => "clara","intentos" => 2,"puntaje" => 16],
         ["palabraWordix" => "MANGO","jugador" => "diego","intentos" => 0,"puntaje" => 0],
     ];
-    return $partidasTotales;
+    return $coleccionPartidas;
 }
 
 //ESTRUCTURA DE DATOS C
@@ -272,71 +285,36 @@ function partidaGanada($coleccionPartidas,$nombre)
 }
 
 //CONSIGNA Nº9 (BIS)
+//Nº5 CASE
 /**
- * Dado el nombre de un jugador, en caso de que ya haya jugado, mostrar el resumen de todas sus partidas.
+ * Escribe en patalla el resumen de la partida de un jugador.
+ * @param array $resumenJugador
  * @param string $jugador
- * @param array $partidasTotales
  */
-function imprimirResumenJugador ($jugador, $partidasTotales)
-{
-    $cantPartidas = 0; //variables contadoras
+function imprimirResumenJugador ($resumenJugador, $jugador){
     $cantVictorias = 0;
-    $intentos1 = 0;
-    $intentos2 = 0;
-    $intentos3 = 0;
-    $intentos4 = 0;
-    $intentos5 = 0;
-    $intentos6 = 0;
-    $sumaPuntajes = 0; //variable acomuladora
-    $encontroAlJugador = false;
-
-    for ($i = 0; $i < count($partidasTotales); $i++){
-        if ($partidasTotales[$i]["jugador"] == $jugador){
-            $encontroAlJugador = true;
-            $cantPartidas = $cantPartidas + 1;
-            $sumaPuntajes = $sumaPuntajes + $partidasTotales[$i]["puntaje"];
-            if($partidasTotales[$i]["intentos"] < 0){
-                $cantVictorias = $cantVictorias + 1;
-            }
-
-            if ($partidasTotales[$i]["intentos"] == 1){
-                $intentos1 = $intentos1 + 1;
-            }elseif($partidasTotales[$i]["intentos"] == 2){
-                $intentos2 = $intentos2 + 1;
-            }elseif($partidasTotales[$i]["intentos"] == 3){
-                $intentos3 = $intentos3 + 1;
-            }elseif($partidasTotales[$i]["intentos"] == 4){
-                $intentos4 = $intentos4 + 1;
-            }elseif($partidasTotales[$i]["intentos"] == 5){
-                $intentos5 = $intentos5 + 1;
-            }elseif($partidasTotales[$i]["intentos"] == 6){
-                $intentos6 = $intentos6 + 1;
-            }
-            
-        }
-    }
-
-    if ($encontroAlJugador == true){
-        $porcentajeVictorias = (100 * $cantVictorias) / $cantPartidas;
-
-        echo "*****************\n";
-        echo "Jugador:", escribirAmarillo($jugador),"\n";
-        echo "Partidas:", $cantPartidas,"\n";
-        echo "Puntaje Total:", $sumaPuntajes, "\n";
-        echo "Victorias:", $cantVictorias, "\n";
-        echo "Porcentaje Victorias: $porcentajeVictorias\n";
-        echo "Adivinadas:\n";
-        echo "        Intento 1 :", $intentos1, "\n";
-        echo "        Intento 2 :", $intentos2, "\n";
-        echo "        Intento 3 :", $intentos3, "\n";
-        echo "        Intento 4 :", $intentos4, "\n";
-        echo "        Intento 5 :", $intentos5, "\n";
-        echo "        Intento 6 :", $intentos6, "\n";
-        echo "*****************\n";
-    }
-
-    if($encontroAlJugador !== true){
-        echo escribirRojo("NO SE ENCONTRO RESUMEN DEL JUGADOR: $jugador\n");
+    $cantPartidas = 0;
+    $porcentajeVictorias = 0;
+    
+    if ($jugador == $resumenJugador ["Jugador"]){
+    $cantVictorias = $resumenJugador["victoria"];
+    $cantPartidas = $resumenJugador["partidas"];
+    $porcentajeVictorias = (100 * $cantVictorias) / $cantPartidas;
+    // mostrar en pantalla un resumen de las estadísticas de un jugador en el juego.
+    echo "******************************************\n";
+    echo "Jugador:", escribirAmarillo($jugador),"\n";
+    echo "Partidas:", $resumenJugador ["partidas"],"\n";
+    echo "Puntaje Total:", $resumenJugador["puntaje"], "\n";
+    echo "Victorias:",$resumenJugador["victoria"], "\n";
+    echo "Porcentaje Victorias: ".floor($porcentajeVictorias)."% \n";
+    echo "Adivinadas:\n";
+    echo "        Intento 1 :", $resumenJugador["intento1"], "\n";
+    echo "        Intento 2 :", $resumenJugador["intento2"], "\n";
+    echo "        Intento 3 :", $resumenJugador["intento3"], "\n";
+    echo "        Intento 4 :", $resumenJugador["intento4"], "\n";
+    echo "        Intento 5 :", $resumenJugador["intento5"], "\n";
+    echo "        Intento 6 :", $resumenJugador["intento6"], "\n";
+    echo "*****************************************\n";
     }
 }
 
@@ -474,6 +452,60 @@ function palabraExistente($registroPalabras,$palabraNueva)
     return false;
 }
 
+//Nº5 CASE
+/**
+ * Dado el nombre de un jugador, en caso de que ya haya jugado, mostrar el resumen de todas sus partidas.
+ * @param string $jugador
+ * @param array $coleccionPartidas
+ */
+
+ function calcularResumenJugador ($jugador, $coleccionPartidas){
+    $cantPartidas = 0; //variables contadoras
+    $cantVictorias = 0;
+    $intentos1 = 0;
+    $intentos2 = 0;
+    $intentos3 = 0;
+    $intentos4 = 0;
+    $intentos5 = 0;
+    $intentos6 = 0;
+    $sumaPuntajes = 0; //variable acomuladora
+    $encontroAlJugador = false;
+
+    for ($i = 0; $i < count($coleccionPartidas); $i++){
+        if ($coleccionPartidas[$i]["jugador"] == $jugador){
+            $encontroAlJugador = true;
+            $cantPartidas = $cantPartidas + 1;
+            $sumaPuntajes = $sumaPuntajes + $coleccionPartidas[$i]["puntaje"];
+            if($coleccionPartidas[$i]["intentos"] > 0){
+                $cantVictorias = $cantVictorias + 1;
+            }
+            if ($coleccionPartidas[$i]["intentos"] == 1){
+                $intentos1 = $intentos1 + 1;
+            }elseif($coleccionPartidas[$i]["intentos"] == 2){
+                $intentos2 = $intentos2 + 1;
+            }elseif($coleccionPartidas[$i]["intentos"] == 3){
+                $intentos3 = $intentos3 + 1;
+            }elseif($coleccionPartidas[$i]["intentos"] == 4){
+                $intentos4 = $intentos4 + 1;
+            }elseif($coleccionPartidas[$i]["intentos"] == 5){
+                $intentos5 = $intentos5 + 1;
+            }elseif($coleccionPartidas[$i]["intentos"] == 6){
+                $intentos6 = $intentos6 + 1;
+            }
+            
+        }
+    }
+
+    if ($encontroAlJugador == true){
+        $resumenJugador =  ["Jugador" => $jugador, "partidas" => $cantPartidas, "puntaje" => $sumaPuntajes, "victoria" => $cantVictorias, "intento1" => $intentos1, "intento2" => $intentos2, "intento3" => $intentos3, "intento4" => $intentos4, "intento5" => $intentos5, "intento6" => $intentos6];
+        return $resumenJugador;
+    }
+    if($encontroAlJugador !== true){
+        echo escribirRojo("NO SE ENCONTRÓ RESUMEN DEL JUGADOR: $jugador"), "\n";
+
+    }
+}
+
 
 /**********************/
 /* PROGRAMA PRINCIPAL */
@@ -540,13 +572,13 @@ do {
 
             break;
         case 5:
+
             echo "Ingrese un nombre: ";
             $jugador = trim(fgets(STDIN));
-            
-
-            $resplay = calcularResumenJugador($jugador, $coleccionPartidas);
+            $registroPartidas = cargarPartidas();
+            $resplay = calcularResumenJugador($jugador, $registroPartidas);
             $resultadoFinal = imprimirResumenJugador($resplay, $jugador);
-            
+            break;
         case 6:
 
             // Ordenar las partidas
@@ -565,7 +597,7 @@ do {
 
         case 7:
             $palabra = leerPalabra5Letras();
-            $registroPalabras = cargarColeccionPalabras();
+            $registroPalabras = cargarColeccionPartidas();
             $i=0;
 
             $palabraExiste = palabraExistente($registroPalabras,$palabra);
