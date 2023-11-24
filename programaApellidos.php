@@ -94,33 +94,21 @@ function cargarPartidas()
  * Esta funcion muestra resumenes de partidas de Jugadores ya jugadas.
  * @return array
  */
-function cargarResumenJugadores ($resumenJugador)
+function cargarResumenJugadores ()
 {
     $resumenJugador = [
-        ["Jugador" => "majo", "partidas" => 1, "puntaje" => 0, "victoria" => 0, "intento1" => 0, "intento2" => 0, "intento3" => 0, "intento4" => 0, "intento5" => 0, "intento6" => 0],
-        ["Jugador" => "majo", "partidas" => 1, "puntaje" => 13, "victoria" => 1, "intento1" => 0, "intento2" => 0, "intento3" => 0, "intento4" => 1, "intento5" => 0, "intento6" => 0],
-        ["Jugador" => "rudolf", "partidas" => 1, "puntaje" => 14, "victoria" => 11, "intento1" => 0, "intento2" => 0, "intento3" => 1, "intento4" => 0, "intento5" => 0, "intento6" => 0],
-        ["Jugador" => "pink2000", "partidas" => 1, "puntaje" => 10, "victoria" => 1, "intento1" => 0, "intento2" => 0, "intento3" => 0, "intento4" => 0, "intento5" => 0, "intento6" => 1],
-        ["Jugador" => "clara", "partidas" => 1, "puntaje" => 15, "victoria" => 1, "intento1" => 0, "intento2" => 0, "intento3" => 1, "intento4" => 0, "intento5" => 0, "intento6" => 0],
-        ["Jugador" => "migue", "partidas" => 1, "puntaje" => 14, "victoria" => 1, "intento1" => 0, "intento2" => 1, "intento3" => 0, "intento4" => 0, "intento5" => 0, "intento6" => 0],
-        ["Jugador" => "diego", "partidas" => 1, "puntaje" => 16, "victoria" => 1, "intento1" => 0, "intento2" => 1, "intento3" => 0, "intento4" => 0, "intento5" => 0, "intento6" => 0],
-        ["Jugador" => "pink2000", "partidas" => 1, "puntaje" => 13, "victoria" => 1, "intento1" => 0, "intento2" => 0, "intento3" => 0, "intento4" => 1, "intento5" => 0, "intento6" => 0],
-        ["Jugador" => "rudolf", "partidas" => 1, "puntaje" => 13, "victoria" => 1, "intento1" => 0, "intento2" => 0, "intento3" => 1, "intento4" => 0, "intento5" => 0, "intento6" => 0],
-        ["Jugador" => "gordo", "partidas" => 1, "puntaje" => 11, "victoria" => 1, "intento1" => 0, "intento2" => 0, "intento3" => 0, "intento4" => 0, "intento5" => 1, "intento6" => 0],
-        ["Jugador" => "clara", "partidas" => 1, "puntaje" => 13, "victoria" => 1, "intento1" => 0, "intento2" => 0, "intento3" => 0, "intento4" => 1, "intento5" => 0, "intento6" => 0],
-        ["Jugador" => "majo", "partidas" => 1, "puntaje" => 15, "victoria" => 1, "intento1" => 0, "intento2" => 0, "intento3" => 1, "intento4" => 0, "intento5" => 0, "intento6" => 0],
-        ["Jugador" => "diego", "partidas" => 1, "puntaje" => 14, "victoria" => 1, "intento1" => 0, "intento2" => 1, "intento3" => 0, "intento4" => 0, "intento5" => 0, "intento6" => 0],
-        ["Jugador" => "gordo", "partidas" => 1, "puntaje" => 0, "victoria" => 0, "intento1" => 0, "intento2" => 0, "intento3" => 0, "intento4" => 0, "intento5" => 0, "intento6" => 0],
-        ["Jugador" => "pink2000", "partidas" => 1, "puntaje" => 13, "victoria" => 1, "intento1" => 0, "intento2" => 0, "intento3" => 1, "intento4" => 0, "intento5" => 0, "intento6" => 0],
-        ["Jugador" => "diego", "partidas" => 1, "puntaje" => 13, "victoria" => 1, "intento1" => 0, "intento2" => 0, "intento3" => 0, "intento4" => 1, "intento5" => 0, "intento6" => 0],
-        ["Jugador" => "pink2000", "partidas" => 1, "puntaje" => 0, "victoria" => 0, "intento1" => 0, "intento2" => 0, "intento3" => 0, "intento4" => 0, "intento5" => 0, "intento6" => 0],
-        ["Jugador" => "diego", "partidas" => 1, "puntaje" => 15, "victoria" => 1, "intento1" => 0, "intento2" => 1, "intento3" => 0, "intento4" => 0, "intento5" => 0, "intento6" => 0],
-        ["Jugador" => "migue", "partidas" => 1, "puntaje" => 13, "victoria" => 1, "intento1" => 0, "intento2" => 1, "intento3" => 0, "intento4" => 0, "intento5" => 0, "intento6" => 0],
-        ["Jugador" => "migue", "partidas" => 1, "puntaje" => 0, "victoria" => 0, "intento1" => 0, "intento2" => 0, "intento3" => 0, "intento4" => 0, "intento5" => 0, "intento6" => 0],
-        ["Jugador" => "clara", "partidas" => 1, "puntaje" => 13, "victoria" => 1, "intento1" => 0, "intento2" => 0, "intento3" => 1, "intento4" => 0, "intento5" => 0, "intento6" => 0],
-        ["Jugador" => "clara", "partidas" => 1, "puntaje" => 16, "victoria" => 1, "intento1" => 0, "intento2" => 1, "intento3" => 0, "intento4" => 0, "intento5" => 0, "intento6" => 0],
-        ["Jugador" => "diego", "partidas" => 1, "puntaje" => 0, "victoria" => 0, "intento1" => 0, "intento2" => 0, "intento3" => 0, "intento4" => 0, "intento5" => 0, "intento6" => 0],
-        ];
+        "Jugador" => 0,
+        "partidas" => 0,
+        "puntaje" => 0,
+        "victoria" => 0,
+        "intento1" => 0,
+        "intento2" => 0,
+        "intento3" => 0,
+        "intento4" => 0,
+        "intento5" => 0,
+        "intento6" => 0,
+  
+      ];
     return($resumenJugador);
 }
 
@@ -181,6 +169,7 @@ function seleccionarOpcion()
  * @param array $rangoValores
  * @return int
  */
+/*
 function numeroCorrecto($rangoValores)
 {
     //int $numero,$numeroCorrecto
@@ -201,7 +190,7 @@ function numeroCorrecto($rangoValores)
 
     return $numeroCorrecto;
 }
-
+*/
 //CONSIGNA Nº6
 /**
  * Una función que dado un número de partida, muestre en pantalla los datos de la partida
@@ -325,6 +314,7 @@ function imprimirResumenJugador ($resumenJugador, $jugador){
  * @param string $jugador
  * @return string 
  */
+/*
 function resumenJugador($resumenJugador, $jugador)
 {
     // Inicializar la variable para el resumen del jugador
@@ -351,7 +341,7 @@ function resumenJugador($resumenJugador, $jugador)
 
     return $partidaDelJugador;
 }
-
+*/
 //CONSIGNA Nº10
 /**
  * Solicita el nombre del jugador y convierte a string las veces nescesarias con la condicion que el primer caracter del nombre sea una letra.
@@ -596,23 +586,24 @@ do {
             break;
 
         case 7:
+            function agregaPalabraColeccionModificada($registroPalabras, $nuevaPalabra) {
+                $registroPalabras[] = $nuevaPalabra;
+                return $registroPalabras;
+            }
+            
             $palabra = leerPalabra5Letras();
-            $coleccionModificada[] = $palabra;
             $registroPalabras = cargarColeccionPalabras();
-            $i=0;
 
-            $palabraExiste = palabraExistente($registroPalabras,$registroPalabras);
+            $palabraExiste = palabraExistente($registroPalabras,$palabra);
             if($palabraExiste){
                 echo "la palabra ingresada ya esta registrada:";
             }
             else{
-                array_push($registroPalabras,$palabra);
-                print_r($registroPalabras);
+                $coleccionModificadaPalabras = agregaPalabraColeccionModificada($registroPalabras, $palabra);
+                print_r($coleccionModificadaPalabras);
             }
-
+            break;
         }
-        $opcion = seleccionarOpcion();
-
 } while ($opcion !=8);
 
 
