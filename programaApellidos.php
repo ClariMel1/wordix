@@ -425,7 +425,11 @@ function palabraExistente($registroPalabras,$palabraNueva)
     }
     return false;
 }
-
+//case 7
+function agregaPalabraColeccionModificada($registroPalabras, $nuevaPalabra) {
+    $registroPalabras[] = $nuevaPalabra;
+    return $registroPalabras;
+}
 
 
 /**********************/
@@ -449,7 +453,6 @@ do {
             $palabraSeleccionada = $registroPalabras[$numero];
             $partida = jugarWordix($palabraSeleccionada, $nombreParticipante);
             print_r ($partida);
-
             break;
         case 2: 
             $nombreParticipante = solicitarNombreJugador();
@@ -517,11 +520,6 @@ do {
             break;
 
         case 7:
-            function agregaPalabraColeccionModificada($registroPalabras, $nuevaPalabra) {
-                $registroPalabras[] = $nuevaPalabra;
-                return $registroPalabras;
-            }
-            
             $palabra = leerPalabra5Letras();
             $registroPalabras = cargarColeccionPalabras();
 
