@@ -157,7 +157,6 @@ function seleccionarOpcion()
     return $eleccion;
 }
 
-
 //CONSIGNA Nº6
 /**
  * Una función que dado un número de partida, muestre en pantalla los datos de la partida
@@ -170,9 +169,9 @@ function mostrarDatosPartida($nroPartida, $datosPartidas)
     
     //al restar 1, se ajusta al índice correcto en el array.
     //muestra en la pantalla la información detallada de la partida específica
-    $partidaAux = $datosPartidas[$nroPartida - 1];
+    $partidaAux = $datosPartidas[$nroPartida];
     
-    echo "*****************"."\n";
+    echo "******************************************\n";
     echo "Partida WORDIX " . $nroPartida . ":" . "palabra " . strtoupper($partidaAux["palabraWordix"])."\n";
     echo "Jugador:" . $partidaAux["jugador"]."\n";
     echo "Puntaje:" . $partidaAux["puntaje"]."\n";
@@ -181,7 +180,7 @@ function mostrarDatosPartida($nroPartida, $datosPartidas)
     }else{
         echo "Intento: Adivinó la palabra en ". $partidaAux["intentos"]. " intentos". "\n";
     }
-    echo "*****************"."\n";
+    echo "******************************************\n";
 }
 
 //CONSIGNA Nº7
@@ -194,27 +193,18 @@ function mostrarDatosPartida($nroPartida, $datosPartidas)
 function agregarPalabra($coleccionPalabras, $palabra)
 {
     // Bandera para indicar si la palabra ya está en la colección
-    $palabraRepetida = false;
+    $palabraBuscada = false;
 
     // Verifica si la palabra ya está en la colección
     foreach ($coleccionPalabras as $palabraGuardada) {
         if ($palabraGuardada == strtoupper($palabra)) {
             // La palabra ya está en la colección
-            $palabraRepetida = true;
+            $palabraBuscada = true;
             break;
         }
     }
 
-    // Si la palabra no está en la colección, agrégala
-    if (!$palabraRepetida) {
-        array_push($coleccionPalabras, $palabra);
-        echo "Palabra agregada con éxito.\n";
-    } else {
-        echo "La palabra ya está en la colección. Por favor, ingresa otra palabra.\n";
-    }
-
-    // Retorna la colección modificada
-    return $coleccionPalabras;
+    return $palabraBuscada;
 }
 
 //CONSIGNA Nº8
@@ -247,7 +237,8 @@ function partidaGanada($coleccionPartidas,$nombre)
  * @param array $resumenJugador
  * @param string $jugador
  */
-function imprimirResumenJugador ($resumenJugador, $jugador){
+function imprimirResumenJugador ($resumenJugador, $jugador)
+{
     $cantVictorias = $resumenJugador["victoria"];
     $cantPartidas = $resumenJugador["partidas"];
     $porcentajeVictorias = (100 * $cantVictorias) / $cantPartidas;
@@ -269,7 +260,6 @@ function imprimirResumenJugador ($resumenJugador, $jugador){
     echo "        Intento 6 :", $resumenJugador["intento6"], "\n";
     echo "*****************************************\n";
 }
-
 
 //CONSIGNA Nº9
 /**
@@ -316,15 +306,28 @@ function calcularResumenJugador ($jugador, $coleccionPartidas)
     }
 
     if ($encontroAlJugador == true){
-        $resumenJugador =  ["Jugador" => $jugador, "partidas" => $cantPartidas, "puntaje" => $sumaPuntajes, "victoria" => $cantVictorias, "intento1" => $intentos1, "intento2" => $intentos2, "intento3" => $intentos3, "intento4" => $intentos4, "intento5" => $intentos5, "intento6" => $intentos6];
-        $resultadoFinal = imprimirResumenJugador($resumenJugador, $jugador);
+        $resumenJugador =  [
+            "Jugador" => $jugador,
+            "partidas" => $cantPartidas,
+            "puntaje" => $sumaPuntajes,
+            "victoria" => $cantVictorias,
+            "intento1" => $intentos1,
+            "intento2" => $intentos2,
+            "intento3" => $intentos3,
+            "intento4" => $intentos4,
+            "intento5" => $intentos5,
+            "intento6" => $intentos6
+        ];
+        $muestraFinal = imprimirResumenJugador($resumenJugador, $jugador);
+        echo $muestraFinal;
+
+        return($resumenJugador);
     }
     if($encontroAlJugador !== true){
         $mensaje = "NO SE ENCONTRÓ RESUMEN DEL JUGADOR: $jugador. \n";
-        $resultadoFinal = escribirRojo($mensaje)."\n";
+        echo escribirRojo($mensaje)."\n";
+        return null;
     }
-
-    return($resultadoFinal);
 }
 
 //CONSIGNA Nº10
@@ -432,6 +435,14 @@ function palabraExistente($registroPalabras,$palabraNueva)
 /* PROGRAMA PRINCIPAL */
 /**********************/
 
+$palabrasGuardadas = cargarColeccionPalabras();
+$palabrasTotales []= $palabrasGuardadas;
+
+$partidasGuardadas = cargarPartidas();
+$partidasTotales [] = $partidasGuardadas;
+
+$resumenBase = cargarResumenJugadores();
+$resumenActual [] = $resumenBase;
 
 //Proceso:
 do {
@@ -439,66 +450,61 @@ do {
     
     switch ($opcion) {
         case 1: 
-            $registroPalabras = cargarColeccionPalabras();
             $Rangomin = 0;
-            $Rangomax = count($registroPalabras) - 1;
+            $Rangomax = count($palabrasTotales[0]) - 1;
 
-            $nombreParticipante = solicitarNombreJugador();
+            $nombreJugador = solicitarNombreJugador();
             $numero = solicitarNumeroEntre ($Rangomin, $Rangomax);
-            $registroPalabras = cargarColeccionPalabras();
-            $palabraSeleccionada = $registroPalabras[$numero];
-            $partida = jugarWordix($palabraSeleccionada, $nombreParticipante);
-            print_r ($partida);
+
+            $palabraSeleccionada = $palabrasTotales[0][$numero];
+            $partidaJugador = jugarWordix($palabraSeleccionada, $nombreJugador);
+            
+            array_push($partidasTotales[0], $partidaJugador);
+            print_r ($partidasTotales);
 
             break;
         case 2: 
-            $nombreParticipante = solicitarNombreJugador();
-            $registroPalabras = cargarColeccionPalabras();
-            $registroPartidas = cargarPartidas();
-            $palabraAleatoria = palabraAleatoria($nombreParticipante,$registroPalabras,$registroPartidas);
-            $partidaJugador = jugarWordix($palabraAleatoria, $nombreParticipante);
+            $nombreJugador = solicitarNombreJugador();
+
+            $palabraAleatoria = palabraAleatoria($nombreJugador,$palabrasTotales,$partidasTotales);
+            $partidaJugador = jugarWordix($palabraAleatoria, $nombreJugador);
+
+            array_push($partidasTotales[0], $partidaJugador);
+            print_r ($partidasTotales);
 
             break;
         case 3:
-
-            echo "Ingrese Nro de partida:";
-            $nroDePartida = trim(fgets(STDIN));
-            $registroPartidas = cargarPartidas();
-
-            if($nroDePartida >= 0 && $nroDePartida < count($registroPartidas)){
-                $datosPartida = mostrarDatosPartida($nroDePartida, $registroPartidas);
-            }
-        
-            while($nroDePartida >= 0 && $nroDePartida > count($registroPartidas)) {
-                echo escribirRojo("El número de partida no existe; Ingrese otro número de partida: "). "\n";
+            do {
+                echo "Ingrese Nro de partida: ";
                 $nroDePartida = trim(fgets(STDIN));
-                $registroPartidas = cargarPartidas();
             
-                if($nroDePartida >= 0 && $nroDePartida < count($registroPartidas)){
-                    $datosPartida = mostrarDatosPartida($nroDePartida, $registroPartidas);
-                   
+                if ($nroDePartida >= 0 && $nroDePartida < count($partidasTotales[0])) {
+                    $datosPartida = mostrarDatosPartida($nroDePartida, $partidasTotales[0]);
+                } else {
+                    echo escribirRojo("El número de partida NO existe. Ingrese otro número de partida:\n");
                 }
-            }
+            } while ($nroDePartida < 0 || $nroDePartida >= count($partidasTotales[0]));
 
             break;
         case 4:
-
-            $nombreParticipante = solicitarNombreJugador();
-            $registroPartidas = cargarPartidas();
-            $partidaGanadora = partidaGanada($registroPartidas,$nombreParticipante);
+            $nombreJugador = solicitarNombreJugador();
+            $partidaGanadora = partidaGanada($partidasTotales[0],$nombreJugador);
             
             if ($partidaGanadora !== -1){
-                $partidaGanadora = $partidaGanadora + 1;
-                $imprimeDatosPartida = mostrarDatosPartida($partidaGanadora,$registroPartidas);
+                $partidaGanadora = $partidaGanadora ; // quite un +1
+                $imprimeDatosPartida = mostrarDatosPartida($partidaGanadora,$partidasTotales[0]);
             }else{
-                echo escribirRojo("El jugador $nombreParticipante no jugó ninguna partida.")."\n";
+                echo escribirRojo("El jugador $nombreJugador no jugó ninguna partida.")."\n";
             }
 
             break;
         case 5:
-            $nombreParticipante = solicitarNombreJugador();
-            $registroPartidas = cargarPartidas();
-            $resplay = calcularResumenJugador($nombreParticipante, $registroPartidas);
+            $nombreJugador = solicitarNombreJugador();
+            $resumenJugador = calcularResumenJugador($nombreJugador, $partidasTotales[0]);
+            array_push($resumenActual[0], $resumenJugador);
+            print_r ($resumenActual);
+
+
             break;
         case 6:
 
@@ -517,21 +523,15 @@ do {
             break;
 
         case 7:
-            function agregaPalabraColeccionModificada($registroPalabras, $nuevaPalabra) {
-                $registroPalabras[] = $nuevaPalabra;
-                return $registroPalabras;
-            }
-            
-            $palabra = leerPalabra5Letras();
-            $registroPalabras = cargarColeccionPalabras();
-
-            $palabraExiste = palabraExistente($registroPalabras,$palabra);
-            if($palabraExiste){
-                echo "la palabra ingresada ya esta registrada:";
-            }
-            else{
-                $coleccionModificadaPalabras = agregaPalabraColeccionModificada($registroPalabras, $palabra);
-                print_r($coleccionModificadaPalabras);
+            $palabraNueva = leerPalabra5Letras();
+            $palabraValida = agregarPalabra($palabrasTotales[0], $palabraNueva);
+            // Si la palabra no está en la colección, agrégala
+            if (!$palabraValida) {
+                array_push($palabrasTotales[0], $palabraNueva);
+                print_r($palabrasTotales);
+                echo "Palabra agregada con éxito.\n";
+            } else {
+                echo "La palabra ya está en la colección. Por favor, ingresa otra palabra.\n";
             }
             break;
         }
