@@ -421,22 +421,6 @@ function palabraAleatoria($jugador, $palabrasTotales, $partidaJugador)
     return($palabraAleatoria);
 }
 
-//OPCION Nº7 DEL MENU DE OPCIONES
-/**
- * la funcion retorna true si la palabra existe en el array
- * @param array $registroPalabras 
- * @param string $palabraNueva 
- * @return boolean
- */
-function palabraExistente($registroPalabras,$palabraNueva)
-{
-    foreach($registroPalabras as $palabra){
-        if($palabra == $palabraNueva){
-            return true;
-        }
-    }
-    return false;
-}
 
 
 /**************************************/
@@ -444,7 +428,12 @@ function palabraExistente($registroPalabras,$palabraNueva)
 /**************************************/
 
 //Declaración de variables:
-
+/*
+    array $palabrasTotales
+    array $partidasTotales
+    array $estadisticasJugadores
+    array $ordenDePalabras
+ */
 
 //Inicialización de variables:
 $palabrasTotales = array ();
@@ -468,13 +457,13 @@ do {
     
     switch ($opcion) {
         case 1: 
-            $Rangomin = 0;
-            $Rangomax = count($palabrasTotales) - 1;
+            $Rangomin = 1;
+            $Rangomax = count($palabrasTotales) + 1;
 
             $nombreJugador = solicitarNombreJugador();
             $numero = solicitarNumeroEntre ($Rangomin, $Rangomax);
 
-            $palabraSeleccionada = $palabrasTotales[$numero];
+            $palabraSeleccionada = $palabrasTotales[$numero - 1];
             $partidaJugador = jugarWordix($palabraSeleccionada, $nombreJugador);
             
             array_push($partidasTotales, $partidaJugador);
@@ -498,12 +487,12 @@ do {
                 echo "Ingrese número de partida: ";
                 $nroDePartida = trim(fgets(STDIN));
             
-                if ($nroDePartida >= 0 && $nroDePartida < count($partidasTotales)) {
-                    $datosPartida = mostrarDatosPartida($nroDePartida, $partidasTotales);
+                if ($nroDePartida >= 1 && $nroDePartida < count($partidasTotales) + 1) {
+                    $datosPartida = mostrarDatosPartida($nroDePartida - 1 , $partidasTotales);
                 } else {
                     echo escribirRojo("(!) El número ingresado de partida NO existe."). "\n";
                 }
-            } while ($nroDePartida < 0 || $nroDePartida >= count($partidasTotales));
+            } while ($nroDePartida < 1 || $nroDePartida >= count($partidasTotales) + 1);
 
             break;
         case 4:
