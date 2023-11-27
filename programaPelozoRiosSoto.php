@@ -201,7 +201,6 @@ function agregarPalabra($coleccionPalabras, $palabra)
         if ($palabraGuardada == strtoupper($palabra)) {
             // La palabra ya está en la colección
             $palabraBuscada = true;
-            break;
         }
     }
 
@@ -301,7 +300,6 @@ function calcularResumenJugador ($jugador, $coleccionPartidas)
     if($encontroAlJugador !== true){
         $mensaje = "(!) No se encontró el resumen del jugador: <<$jugador>>";
         echo escribirRojo($mensaje). "\n";
-        return null;
     }
 }
 
@@ -402,7 +400,6 @@ function palabraAleatoria($jugador, $palabrasTotales, $partidaJugador)
         foreach ($palabrasSeleccionadas as $palabraRepetida) {
             if ($palabra == $palabraRepetida) {
                 $repetida = true;
-                break;
             }
         }
         // Si la palabra no está repetida, agrégala al resultado
@@ -414,7 +411,8 @@ function palabraAleatoria($jugador, $palabrasTotales, $partidaJugador)
     // Revisa si hay palabras disponibles para jugar
     if (count($palabrasNoSeleccionadas) > 0) {
         // Elige una palabra al azar
-        $palabraAleatoria = array_values($palabrasNoSeleccionadas)[rand(0, count($palabrasNoSeleccionadas) - 1)];
+        $indice = rand(0, count($palabrasNoSeleccionadas) - 1);
+        $palabraAleatoria = $palabrasNoSeleccionadas[$indice];
     } else {
         $palabraAleatoria = "Ya jugó con todas las palabras disponibles.";
     }
