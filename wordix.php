@@ -128,11 +128,11 @@ function escribirSegunEstado($texto, $estado)
  */
 function escribirMensajeBienvenida($usuario)
 {
-    echo "************************************************\n";
+    echo "***************************************************\n";
     echo " Hola ";
     escribirAmarillo($usuario);
     echo " Juguemos una PARTIDA de WORDIX! \n";
-    echo "************************************************\n";
+    echo "***************************************************\n";
 }
 
 
