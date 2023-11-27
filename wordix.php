@@ -35,7 +35,7 @@ const ESTADO_LETRA_PERTENECE = "pertenece";
 function solicitarNumeroEntre($min, $max)
 {
     //int $numero
-    echo "ingrese un numero:";
+    echo "Ingrese un número: ";
     $numero = trim(fgets(STDIN));
 
     if (is_numeric($numero)) { //determina si un string es un número. puede ser float como entero.
@@ -128,11 +128,11 @@ function escribirSegunEstado($texto, $estado)
  */
 function escribirMensajeBienvenida($usuario)
 {
-    echo "*******\n";
-    echo "** Hola ";
+    echo "************************************************\n";
+    echo " Hola ";
     escribirAmarillo($usuario);
-    echo " Juguemos una PARTIDA de WORDIX! **\n";
-    echo "*******\n";
+    echo " Juguemos una PARTIDA de WORDIX! \n";
+    echo "************************************************\n";
 }
 
 
@@ -168,7 +168,7 @@ function leerPalabra5Letras()
     $palabra  = strtoupper($palabra);
 
     while ((strlen($palabra) != 5) || !esPalabra($palabra)) {
-        echo "Debe ingresar una palabra de 5 letras:";
+        echo "Debe ingresar una palabra de 5 letras: ";
         $palabra = strtoupper(trim(fgets(STDIN)));
     }
     return $palabra;
@@ -409,7 +409,7 @@ function jugarWordix($palabraWordix, $nombreUsuario)
     if ($ganoElIntento) {
         $nroIntento--;
         $puntaje = obtenerPuntajeWordix($nroIntento, $palabraIntento);
-        echo "Adivinó la palabra Wordix en el intento " . $nroIntento . "!: " . $palabraIntento . " Obtuvo $puntaje puntos!";
+        echo "Adivinó la palabra Wordix en el intento " . $nroIntento . "!: " . $palabraIntento . " Obtuvo $puntaje puntos!". "\n";
     } else {
         $nroIntento = 0; //reset intento
         $puntaje = 0;

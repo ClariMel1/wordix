@@ -150,7 +150,8 @@ function seleccionarOpcion()
         echo "Ingrese el número de la opción deseada: ";
         $eleccion = trim(fgets(STDIN));
         if($eleccion < 1 || $eleccion > count($opciones)){
-            echo "Opción no válida. Pruebe otra opción"."\n";
+            $mensaje = "(!) Opción no válida. Pruebe otra opción";
+            echo escribirRojo($mensaje). "\n";
         }
     }while($eleccion < 1 || $eleccion > count($opciones));
     
@@ -171,7 +172,7 @@ function mostrarDatosPartida($nroPartida, $datosPartidas)
     //muestra en la pantalla la información detallada de la partida específica
     echo "******************************************\n";
     echo "Partida WORDIX " . $nroPartida . ":" . " palabra " . strtoupper($partidaAux["palabraWordix"])."\n";
-    echo "Jugador:", escribirAmarillo($partidaAux["jugador"])."\n";
+    echo "Jugador: ", escribirAmarillo($partidaAux["jugador"])."\n";
     echo "Puntaje: " . $partidaAux["puntaje"]."\n";
     if($partidaAux["intentos"] == 0){
         echo "Intento: No adivinó la palabra."."\n";
@@ -214,20 +215,17 @@ function agregarPalabra($coleccionPalabras, $palabra)
  * @param string $nombre
  * @return int
  */
-function partidaGanada($coleccionPartidas,$nombre)
+function partidaGanada($coleccionPartidas, $nombre)
 {
-    //int $resultado,$llave
     $resultado = -1;
-    
-    //Recorrido Exhaustivo entra a la colleccion de partidas y busca al jugador y sus intentos
-    foreach($coleccionPartidas as $llave => $partidasGuardadas ){
-        //si el nombre y los intentos son mayor a 0 se guarda la primera partida del jugador
-        if($partidasGuardadas["jugador"] == $nombre && $partidasGuardadas["intentos"] > 0){
+
+    foreach ($coleccionPartidas as $llave => $partidasGuardadas) {
+        if ($partidasGuardadas["jugador"] == $nombre && $partidasGuardadas["intentos"] > 0 && $resultado == -1) {
             $resultado = $llave;
         }
     }
 
-    return ($resultado);
+    return $resultado;
 }
 
 //CONSIGNA Nº9
@@ -349,7 +347,7 @@ function solicitarNombreJugador ()
     //string $nombreUsuario
 
     do{
-        echo "Ingrese el nombre del Jugador:";
+        echo "Ingrese el nombre del Jugador: ";
         $nombreUsuario = trim(fgets(STDIN));
         //strtolower >> convierte el nombre en minusculas
         $nombreUsuario = strtolower($nombreUsuario);
@@ -418,7 +416,7 @@ function palabraAleatoria($jugador, $palabrasTotales, $partidaJugador)
         // Elige una palabra al azar
         $palabraAleatoria = array_values($palabrasNoSeleccionadas)[rand(0, count($palabrasNoSeleccionadas) - 1)];
     } else {
-        $palabraAleatoria = "Ya jugo con todas las palabras disponibles.";
+        $palabraAleatoria = "Ya jugó con todas las palabras disponibles.";
     }
     return($palabraAleatoria);
 }
