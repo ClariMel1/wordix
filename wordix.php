@@ -413,7 +413,7 @@ function jugarWordix($palabraWordix, $nombreUsuario)
     } else {
         $nroIntento = 0; //reset intento
         $puntaje = 0;
-        echo "Seguí Jugando Wordix, la próxima será! ";
+        echo "Seguí Jugando Wordix, la próxima será! ". "\n";
     }
 
     $partida = [
