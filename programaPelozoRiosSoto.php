@@ -1,40 +1,41 @@
 <?php
 include_once("wordix.php");
 
-/**/
+/*****************************/
 /* DATOS DE LOS INTEGRANTES */
-/**/
+/***************************/
 
-/* - RIOS DIEGO - legajos 4877 - mail:diegoavilaaa0@gmail.com - github:diegoavila1
+/* 
+- RIOS DIEGO - legajos 4877 - mail:diegoavilaaa0@gmail.com - github:diegoavila1
 - MIGUEL SOTO - legajos 4866 - mail:masg.soto16@gmail.com - github:MiguelSoto29
 - CLARA PELOZO - legajos 4938 - mail:clara.pelozo@est.fi.uncoma.edu.ar - github:ClariMel1
-/*
 */
 
+//ESTRUCTURA DE DATOS PARA EL CASE Nº6
 $palabrasJugadores = [ 
-    ["palabraWordix" => "QUESO","jugador" => "majo"],
-    ["palabraWordix" => "GOTAS","jugador" => "majo"],
-    ["palabraWordix" => "CASAS","jugador" => "rudolf"],
-    ["palabraWordix" => "QUESO","jugador" => "pink2000"],
-    ["palabraWordix" => "TINTO","jugador" => "clara"],
-    ["palabraWordix" => "MUJER","jugador" => "migue"],
-    ["palabraWordix" => "PISOS","jugador" => "diego"],
-    ["palabraWordix" => "GATOS","jugador" => "pink2000"],
-    ["palabraWordix" => "MANGO","jugador" => "rudolf"],
-    ["palabraWordix" => "MELON","jugador" => "gordo"],
-    ["palabraWordix" => "VERDE","jugador" => "clara"],
-    ["palabraWordix" => "YUYOS","jugador" => "majo"],
-    ["palabraWordix" => "CEBRA","jugador" => "diego"],
-    ["palabraWordix" => "RASGO","jugador" => "gordo"],
-    ["palabraWordix" => "LINCE","jugador" => "pink2000"],
-    ["palabraWordix" => "FUEGO","jugador" => "diego"],
-    ["palabraWordix" => "FLAMA","jugador" => "pink2000"],
-    ["palabraWordix" => "GRANO","jugador" => "diego"],
-    ["palabraWordix" => "HUEVO","jugador" => "migue"],
-    ["palabraWordix" => "YUYOS","jugador" => "migue"],
-    ["palabraWordix" => "PIANO","jugador" => "clara"],
-    ["palabraWordix" => "NAVES","jugador" => "clara"],
-    ["palabraWordix" => "MANGO","jugador" => "diego"]
+    ["jugador" => "majo", "palabraWordix" => "QUESO"],
+    ["jugador" => "majo" , "palabraWordix" => "GOTAS"],
+    ["jugador" => "rudolf", "palabraWordix" => "CASAS"],
+    ["jugador" => "pink2000", "palabraWordix" => "QUESO"],
+    ["jugador" => "clara", "palabraWordix" => "TINTO"],
+    ["jugador" => "migue", "palabraWordix" => "MUJER"],
+    ["jugador" => "diego", "palabraWordix" => "PISOS"],
+    ["jugador" => "pink2000", "palabraWordix" => "GATOS"],
+    ["jugador" => "rudolf", "palabraWordix" => "MANGO"],
+    ["jugador" => "gordo", "palabraWordix" => "MELON"],
+    ["jugador" => "clara", "palabraWordix" => "VERDE"],
+    ["jugador" => "majo", "palabraWordix" => "YUYOS"],
+    ["jugador" => "diego","palabraWordix" => "CEBRA"],
+    ["jugador" => "gordo", "palabraWordix" => "RASGO"],
+    ["jugador" => "pink2000", "palabraWordix" => "LINCE"],
+    ["jugador" => "diego","palabraWordix" => "FUEGO"],
+    ["jugador" => "pink2000", "palabraWordix" => "FLAMA"],
+    ["jugador" => "diego", "palabraWordix" => "GRANO"],
+    ["jugador" => "migue", "palabraWordix" => "HUEVO"],
+    ["jugador" => "migue", "palabraWordix" => "YUYOS"],
+    ["jugador" => "clara", "palabraWordix" => "PIANO"],
+    ["jugador" => "clara", "palabraWordix" => "NAVES"],
+    ["jugador" => "diego", "palabraWordix" => "MANGO"]
 ];
 
 //CONSIGNA Nº1 - ESTRUCTURA DE DATOS A
@@ -96,7 +97,7 @@ function cargarPartidas()
 function cargarResumenJugadores ()
 {
     $resumenJugador = [
-        "Jugador" => 0,
+        ["Jugador" => 0,
         "partidas" => 0,
         "puntaje" => 0,
         "victoria" => 0,
@@ -105,13 +106,13 @@ function cargarResumenJugadores ()
         "intento3" => 0,
         "intento4" => 0,
         "intento5" => 0,
-        "intento6" => 0,
+        "intento6" => 0]
   
       ];
     return($resumenJugador);
 }
 
-
+ 
 /***********************************/
 //FUNCIONES DEL EQUIPO DE DESARROLLO 
 /***********************************/
@@ -165,15 +166,13 @@ function seleccionarOpcion()
 function mostrarDatosPartida($nroPartida, $datosPartidas)
 {
     //int $partidaAux 
-    
-    //al restar 1, se ajusta al índice correcto en el array.
-    //muestra en la pantalla la información detallada de la partida específica
     $partidaAux = $datosPartidas[$nroPartida];
-    
+
+    //muestra en la pantalla la información detallada de la partida específica
     echo "******************************************\n";
     echo "Partida WORDIX " . $nroPartida . ":" . " palabra " . strtoupper($partidaAux["palabraWordix"])."\n";
-    echo "Jugador:" . $partidaAux["jugador"]."\n";
-    echo "Puntaje:" . $partidaAux["puntaje"]."\n";
+    echo "Jugador:", escribirAmarillo($partidaAux["jugador"])."\n";
+    echo "Puntaje: " . $partidaAux["puntaje"]."\n";
     if($partidaAux["intentos"] == 0){
         echo "Intento: No adivinó la palabra."."\n";
     }else{
@@ -259,11 +258,11 @@ function calcularResumenJugador ($jugador, $coleccionPartidas)
     for ($i = 0; $i < count($coleccionPartidas); $i++){
         if ($coleccionPartidas[$i]["jugador"] == $jugador){
             $encontroAlJugador = true;
-            $cantPartidas = $cantPartidas + 1;
+            $cantPartidas ++;
             $sumaPuntajes = $sumaPuntajes + $coleccionPartidas[$i]["puntaje"];
 
             if($coleccionPartidas[$i]["intentos"] > 0){
-                $cantVictorias = $cantVictorias + 1;
+                $cantVictorias ++;
             }
 
             if ($coleccionPartidas[$i]["intentos"] == 1){
@@ -302,8 +301,8 @@ function calcularResumenJugador ($jugador, $coleccionPartidas)
         return($resumenJugador);
     }
     if($encontroAlJugador !== true){
-        $mensaje = "NO SE ENCONTRÓ RESUMEN DEL JUGADOR: $jugador. \n";
-        echo escribirRojo($mensaje)."\n";
+        $mensaje = "(!) No se encontró el resumen del jugador: <<$jugador>>";
+        echo escribirRojo($mensaje). "\n";
         return null;
     }
 }
@@ -326,17 +325,17 @@ function imprimirResumenJugador ($resumenJugador, $jugador)
     // mostrar en pantalla un resumen de las estadísticas de un jugador en el juego.
     echo "******************************************\n";
     echo "Jugador:", escribirAmarillo($jugador),"\n";
-    echo "Partidas:", $resumenJugador ["partidas"],"\n";
-    echo "Puntaje Total:", $resumenJugador["puntaje"], "\n";
-    echo "Victorias:",$resumenJugador["victoria"], "\n";
+    echo "Partidas: ", $resumenJugador ["partidas"],"\n";
+    echo "Puntaje Total: ", $resumenJugador["puntaje"], "\n";
+    echo "Victorias: ",$resumenJugador["victoria"], "\n";
     echo "Porcentaje Victorias: ".floor($porcentajeVictorias)."% \n";
     echo "Adivinadas:\n";
-    echo "        Intento 1 :", $resumenJugador["intento1"], "\n";
-    echo "        Intento 2 :", $resumenJugador["intento2"], "\n";
-    echo "        Intento 3 :", $resumenJugador["intento3"], "\n";
-    echo "        Intento 4 :", $resumenJugador["intento4"], "\n";
-    echo "        Intento 5 :", $resumenJugador["intento5"], "\n";
-    echo "        Intento 6 :", $resumenJugador["intento6"], "\n";
+    echo "        Intento 1 : ", $resumenJugador["intento1"], "\n";
+    echo "        Intento 2 : ", $resumenJugador["intento2"], "\n";
+    echo "        Intento 3 : ", $resumenJugador["intento3"], "\n";
+    echo "        Intento 4 : ", $resumenJugador["intento4"], "\n";
+    echo "        Intento 5 : ", $resumenJugador["intento5"], "\n";
+    echo "        Intento 6 : ", $resumenJugador["intento6"], "\n";
     echo "*****************************************\n";
 }
 
@@ -440,11 +439,7 @@ function palabraExistente($registroPalabras,$palabraNueva)
     }
     return false;
 }
-//case 7
-function agregaPalabraColeccionModificada($registroPalabras, $nuevaPalabra) {
-    $registroPalabras[] = $nuevaPalabra;
-    return $registroPalabras;
-}
+
 
 /**************************************/
 /*********** PROGRAMA PRINCIPAL *******/
@@ -468,6 +463,7 @@ $partidasTotales = $partidasBase;
 $estadisticasJugadores = $resumenBase;
 $ordenDePalabras = $palabrasJugadores;
 
+
 //Proceso:
 do {
     $opcion = seleccionarOpcion();
@@ -484,8 +480,8 @@ do {
             $partidaJugador = jugarWordix($palabraSeleccionada, $nombreJugador);
             
             array_push($partidasTotales, $partidaJugador);
-            array_push($ordenDePalabras, ["palabraWordix" => $palabraSeleccionada, "jugador" => $nombreJugador]);
-            print_r ($partidasTotales);
+            array_push($ordenDePalabras, ["jugador" => $nombreJugador, "palabraWordix" => $palabraSeleccionada]);
+            //print_r ($partidasTotales);
 
             break;
         case 2: 
@@ -495,19 +491,19 @@ do {
             $partidaJugador = jugarWordix($palabraAleatoria, $nombreJugador);
 
             array_push($partidasTotales, $partidaJugador);
-            array_push($ordenDePalabras, ["palabraWordix" => $palabraAleatoria, "jugador" => $nombreJugador]);
-            print_r ($partidasTotales);
+            array_push($ordenDePalabras, ["jugador" => $nombreJugador, "palabraWordix" => $palabraAleatoria]);
+            //print_r ($partidasTotales);
 
             break;
         case 3:
             do {
-                echo "Ingrese Nro de partida: ";
+                echo "Ingrese número de partida: ";
                 $nroDePartida = trim(fgets(STDIN));
             
                 if ($nroDePartida >= 0 && $nroDePartida < count($partidasTotales)) {
                     $datosPartida = mostrarDatosPartida($nroDePartida, $partidasTotales);
                 } else {
-                    echo escribirRojo("El número de partida NO existe. Ingrese otro número de partida:\n");
+                    echo escribirRojo("(!) El número ingresado de partida NO existe."). "\n";
                 }
             } while ($nroDePartida < 0 || $nroDePartida >= count($partidasTotales));
 
@@ -517,10 +513,10 @@ do {
             $partidaGanadora = partidaGanada($partidasTotales,$nombreJugador);
             
             if ($partidaGanadora !== -1){
-                $partidaGanadora = $partidaGanadora ; // quite un +1
+                $partidaGanadora = $partidaGanadora;
                 $imprimeDatosPartida = mostrarDatosPartida($partidaGanadora,$partidasTotales);
             }else{
-                echo escribirRojo("El jugador $nombreJugador no jugó ninguna partida.")."\n";
+                echo escribirRojo("(!) El jugador <<$nombreJugador>> no jugó o no ganó ninguna partida.")."\n";
             }
 
             break;
@@ -528,7 +524,7 @@ do {
             $nombreJugador = solicitarNombreJugador();
             $resumenJugador = calcularResumenJugador($nombreJugador, $partidasTotales);
             array_push($estadisticasJugadores, $resumenJugador);
-            print_r ($estadisticasJugadores);
+            //print_r ($estadisticasJugadores);
 
             break;
         case 6:
@@ -537,10 +533,10 @@ do {
             // Imprimir las partidas ordenadas con índices comenzando en 1
             $indice = 1;
             foreach ($ordenDePalabras as $partida) { //recorrido exhaustivo para mostrar todas
-            echo "Lugar: $indice\n";
-            print_r($partida);
-            echo "\n";
-            $indice++;
+                echo "Lugar: $indice\n";
+                print_r($partida);
+                echo "\n";
+                $indice++;
             }
             echo "\n";
 
@@ -552,14 +548,17 @@ do {
             // Si la palabra no está en la colección, agrégala
             if (!$palabraValida) {
                 array_push($palabrasTotales, $palabraNueva);
-                print_r($palabrasTotales);
-                echo "Palabra agregada con éxito.\n";
+                //print_r($palabrasTotales);
+                echo escribirVerde("¡Palabra agregada con éxito!")."\n";
             } else {
-                echo "La palabra ingresada ya estaba en la colección.\n";
+                echo escribirRojo("(!) La palabra ingresada ya pertenece a la colección.")."\n";
             }
             break;
         }
 } while ($opcion !=8);
+
+escribirGris("¡Gracias por jugar a Wordix! Vuelva pronto :)");
+
 
 
 ?>

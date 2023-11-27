@@ -84,7 +84,7 @@ function escribirAmarillo($texto)
  */
 function escribirGris($texto)
 {
-    echo "\e[1;34;47m $texto \e[0m";
+    echo "\e[1;37;47m $texto \e[0m";
 }
 
 /**
