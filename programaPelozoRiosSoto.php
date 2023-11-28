@@ -465,7 +465,6 @@ do {
             
             array_push($partidasTotales, $partidaJugador);
             array_push($ordenDePalabras, ["jugador" => $nombreJugador, "palabraWordix" => $palabraSeleccionada]);
-            //print_r ($partidasTotales);
 
             break;
         case 2: 
@@ -475,7 +474,6 @@ do {
 
             array_push($partidasTotales, $partidaJugador);
             array_push($ordenDePalabras, ["jugador" => $nombreJugador, "palabraWordix" => $palabraAleatoria]);
-            //print_r ($partidasTotales);
 
             break;
         case 3:
@@ -507,7 +505,6 @@ do {
             $nombreJugador = solicitarNombreJugador();
             $resumenJugador = calcularResumenJugador($nombreJugador, $partidasTotales);
             array_push($estadisticasJugadores, $resumenJugador);
-            //print_r ($estadisticasJugadores);
 
             break;
         case 6:
@@ -524,14 +521,12 @@ do {
             echo "\n";
 
             break;
-
         case 7:
             $palabraNueva = leerPalabra5Letras();
             $palabraValida = agregarPalabra($palabrasTotales, $palabraNueva);
             // Si la palabra no está en la colección, agrégala
             if (!$palabraValida) {
                 array_push($palabrasTotales, $palabraNueva);
-                //print_r($palabrasTotales);
                 echo escribirVerde("¡Palabra agregada con éxito!")."\n";
             } else {
                 echo escribirRojo("(!) La palabra ingresada ya pertenece a la colección.")."\n";
@@ -541,7 +536,4 @@ do {
 } while ($opcion !=8);
 
 escribirGris("¡Gracias por jugar a Wordix! Vuelva pronto :)");
-
-
-
 ?>

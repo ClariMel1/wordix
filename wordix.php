@@ -338,12 +338,15 @@ function esIntentoGanado($estructuraPalabraIntento)
 
 /**
  * Determina el puntaje del ganador mediante la cantidad de intentos y la palabra usada
- * @param int $nroIntento
- * @param string $palabraWordix
+ * @param int $nroIntento 
+ * @param string $palabraWordix 
  * @return int
  */
 function obtenerPuntajeWordix($nroIntento, $palabraWordix) 
 {
+    //string $letra
+    //int $puntaje
+
     if ($nroIntento > 0){
         if($nroIntento == 1){
             $puntaje = 6;
