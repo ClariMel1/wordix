@@ -127,7 +127,7 @@ function seleccionarOpcion()
     //array $opcines
     //int partidasGenerales
     //array indexado que muestra el mensaje del menu 
-    $opciones = [
+    $menuDeOpciones = [
         "Jugar al Wordix con una palabra elegida \n",
         "Jugar al Wordix con una palabra aleatoria \n",
         "Mostrar una partida \n",
@@ -140,21 +140,21 @@ function seleccionarOpcion()
     echo "Menu de opciones:"."\n";
     
     //Recorrido Exhaustivo muestra el indice de las opciones    
-    foreach($opciones as $key => $opcion){
-        echo ($key + 1). ") " . $opcion."\n";
+    foreach( $menuDeOpciones as $indice => $opcion){
+        echo ($indice + 1). ") " . $opcion."\n";
     }
 
     //Recorrido Parcial obliga al usuario a marcar una opcion correcta
     do{
         echo "Ingrese el número de la opción deseada: ";
-        $eleccion = trim(fgets(STDIN));
-        if($eleccion < 1 || $eleccion > count($opciones)){
-            $mensaje = "(!) Opción no válida. Pruebe otra opción";
-            echo escribirRojo($mensaje). "\n";
+        $eleccionElegida = trim(fgets(STDIN));
+        if($eleccionElegida < 1 || $eleccionElegida > count($menuDeOpciones)){
+            $mensajeAlerta = "(!) Opción no válida. Pruebe otra opción";
+            echo escribirRojo($mensajeAlerta). "\n";
         }
-    }while($eleccion < 1 || $eleccion > count($opciones));
+    }while($eleccionElegida < 1 || $eleccionElegida > count($menuDeOpciones));
     
-    return $eleccion;
+    return ($eleccionElegida);
 }
 
 //CONSIGNA Nº6
@@ -163,7 +163,7 @@ function seleccionarOpcion()
  * @param int $nroPartida
  * @param array $partidasGenerales
  */
-function mostrarDatosPartida($nroPartida, $partidasGenerales)
+function imprimirDatosPartida($nroPartida, $partidasGenerales)
 {
     //int $partidaDelJugador 
     $partidaDelJugador = $partidasGenerales[$nroPartida];
@@ -356,21 +356,25 @@ function solicitarNombreJugador ()
 
 //CONSIGNA Nº11
 /**
- * Esta funcion muestra una colección de partidas ordenadas alfabeticamente por el nombre del jugador
- * y en caso de tener el mismo nombre evalúa la palabra que jugó de la misma manera (la función se basa en un arreglo)
+ * Esta funcion compara los nombres de jugadores, en caso de ser iguales, compara las palabras jugadas de los mismos.
  * @param array $clave1
  * @param array $clave2
  * @return int
  */
-function miComparacion($clave1, $clave2) 
+function comparacionJugadores ($clave1, $clave2) 
 {
+    //int $comparacionNombreJugador, $comparacionPorPalabra
+
     $comparacionNombreJugador = strcmp($clave1["jugador"], $clave2["jugador"]);
 
     if ($comparacionNombreJugador != 0) {
-        return $comparacionNombreJugador;
+        $comparacionFinal = $comparacionNombreJugador;
     } else {
-        return strcmp($clave1["palabraWordix"], $clave2["palabraWordix"]);
+        $comparacionPorPalabra = strcmp($clave1["palabraWordix"], $clave2["palabraWordix"]);
+        $comparacionFinal = $comparacionPorPalabra;
     }
+
+    return($comparacionFinal);
 }
 
 //OPCION Nº2 DEL MENU DE OPCIONES
@@ -413,7 +417,7 @@ function palabraAleatoria($nombreJugador, $palabrasTotales, $partidaJugador)
         $indiceAlAzar = rand(0, count($palabrasNoSeleccionadas) - 1);
         $palabraAleatoria = $palabrasNoSeleccionadas[$indiceAlAzar];
     } else {
-        $palabraAleatoria = "Ya jugó con todas las palabras disponibles.";
+        $palabraAleatoria = "(!) Ya jugó con todas las palabras disponibles.";
     }
     return($palabraAleatoria);
 }
@@ -482,7 +486,7 @@ do {
                 $nroDePartida = trim(fgets(STDIN));
             
                 if ($nroDePartida >= 1 && $nroDePartida < count($partidasTotales) + 1) {
-                    $datosPartida = mostrarDatosPartida($nroDePartida - 1 , $partidasTotales);
+                    $datosPartida = imprimirDatosPartida($nroDePartida - 1 , $partidasTotales);
                 } else {
                     echo escribirRojo("(!) El número ingresado de partida NO existe."). "\n";
                 }
@@ -495,7 +499,7 @@ do {
             
             if ($partidaGanadora !== -1){
                 $partidaGanadora = $partidaGanadora;
-                $imprimeDatosPartida = mostrarDatosPartida($partidaGanadora,$partidasTotales);
+                $imprimeDatosPartida = imprimirDatosPartida($partidaGanadora,$partidasTotales);
             }else{
                 echo escribirRojo("(!) El jugador <<$nombreJugador>> no jugó o no ganó ninguna partida.")."\n";
             }
@@ -509,11 +513,12 @@ do {
             break;
         case 6:
             // Ordenar las partidas
-            usort($ordenDePalabras, 'miComparacion');
-            // Imprimir las partidas ordenadas con índices comenzando en 1
+            usort($ordenDePalabras, 'comparacionJugadores');
+
+            // Imprime las partidas ordenadas mediante un recorrido exhaustivo
             $indice = 1;
-            foreach ($ordenDePalabras as $partida) { //recorrido exhaustivo para mostrar todas
-                echo "Lugar: $indice\n";
+            foreach ($ordenDePalabras as $partida) {
+                echo escribirVerde("Lugar: $indice"). "\n";
                 print_r($partida);
                 echo "\n";
                 $indice++;
@@ -524,7 +529,8 @@ do {
         case 7:
             $palabraNueva = leerPalabra5Letras();
             $palabraValida = agregarPalabra($palabrasTotales, $palabraNueva);
-            // Si la palabra no está en la colección, agrégala
+
+            // Si la palabra no está en la colección, sera agregada
             if (!$palabraValida) {
                 array_push($palabrasTotales, $palabraNueva);
                 echo escribirVerde("¡Palabra agregada con éxito!")."\n";
