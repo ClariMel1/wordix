@@ -85,6 +85,23 @@ function cargarPartidas()
         ["palabraWordix" => "PIANO","jugador" => "clara","intentos" => 3,"puntaje" => 13],
         ["palabraWordix" => "NAVES","jugador" => "clara","intentos" => 2,"puntaje" => 16],
         ["palabraWordix" => "MANGO","jugador" => "diego","intentos" => 0,"puntaje" => 0],
+
+        ["palabraWordix" => "MUJER","jugador" => "clara","intentos" => 3,"puntaje" => 15],
+        ["palabraWordix" => "QUESO","jugador" => "clara","intentos" => 3,"puntaje" => 15],
+        ["palabraWordix" => "FUEGO","jugador" => "clara","intentos" => 3,"puntaje" => 15],
+        ["palabraWordix" => "CASAS","jugador" => "clara","intentos" => 3,"puntaje" => 15],
+        ["palabraWordix" => "RASGO","jugador" => "clara","intentos" => 3,"puntaje" => 15],
+        ["palabraWordix" => "GATOS","jugador" => "clara","intentos" => 3,"puntaje" => 15],
+        ["palabraWordix" => "GOTAS","jugador" => "clara","intentos" => 3,"puntaje" => 15],
+        ["palabraWordix" => "HUEVO","jugador" => "clara","intentos" => 3,"puntaje" => 15],
+        ["palabraWordix" => "MELON","jugador" => "clara","intentos" => 3,"puntaje" => 15],
+        ["palabraWordix" => "YUYOS","jugador" => "clara","intentos" => 3,"puntaje" => 15],
+        ["palabraWordix" => "PISOS","jugador" => "clara","intentos" => 3,"puntaje" => 15],
+        ["palabraWordix" => "CEBRA","jugador" => "clara","intentos" => 3,"puntaje" => 15],
+        ["palabraWordix" => "MANGO","jugador" => "clara","intentos" => 3,"puntaje" => 15],
+        ["palabraWordix" => "LINCE","jugador" => "clara","intentos" => 3,"puntaje" => 15],
+        ["palabraWordix" => "FLAMA","jugador" => "clara","intentos" => 3,"puntaje" => 15],
+        ["palabraWordix" => "GRANO","jugador" => "clara","intentos" => 3,"puntaje" => 15],
     ];
     return $coleccionPartidas;
 }
@@ -128,14 +145,14 @@ function seleccionarOpcion()
     //int partidasGenerales
     //array indexado que muestra el mensaje del menu 
     $menuDeOpciones = [
-        "Jugar al Wordix con una palabra elegida \n",
-        "Jugar al Wordix con una palabra aleatoria \n",
-        "Mostrar una partida \n",
-        "Mostrar la primera partida ganadora \n",
-        "Mostrar resumen de Jugador \n",
-        "Mostrar listado de partidas ordenadas por jugador y por palabra \n",
-        "Agregar una palabra de 5 letras a Wordix \n",
-        "Salir \n",
+        "Jugar al Wordix con una palabra elegida",
+        "Jugar al Wordix con una palabra aleatoria",
+        "Mostrar una partida",
+        "Mostrar la primera partida ganadora",
+        "Mostrar resumen de Jugador",
+        "Mostrar listado de partidas ordenadas por jugador y por palabra",
+        "Agregar una palabra de 5 letras a Wordix",
+        "Salir",
     ];
     echo "Menu de opciones:"."\n";
     
@@ -144,17 +161,16 @@ function seleccionarOpcion()
         echo ($indice + 1). ") " . $opcion."\n";
     }
 
-    //Recorrido Parcial obliga al usuario a marcar una opcion correcta
     do{
         echo "Ingrese el número de la opción deseada: ";
-        $eleccionElegida = trim(fgets(STDIN));
-        if($eleccionElegida < 1 || $eleccionElegida > count($menuDeOpciones)){
+        $opcionElegida = trim(fgets(STDIN));
+        if($opcionElegida < 1 || $opcionElegida > count($menuDeOpciones)){
             $mensajeAlerta = "(!) Opción no válida. Pruebe otra opción";
             echo escribirRojo($mensajeAlerta). "\n";
         }
-    }while($eleccionElegida < 1 || $eleccionElegida > count($menuDeOpciones));
+    }while($opcionElegida < 1 || $opcionElegida > count($menuDeOpciones));
     
-    return ($eleccionElegida);
+    return ($opcionElegida);
 }
 
 //CONSIGNA Nº6
@@ -379,18 +395,21 @@ function comparacionJugadores ($clave1, $clave2)
 
 //OPCION Nº2 DEL MENU DE OPCIONES
 /**
- * Dar una palabra aleatoria la cual no haya sido seleccionada por el Jugador anteriormente.
+ * Controla que palabras ya fueron usadas por el jugador y en caso de haber palabras sin jugar, retorna
+ * el arreglo completo del mismo.
  * @param string $nombreJugador
  * @param array $palabrasTotales
  * @param array $partidaJugador
- * @return string
+ * @return array
  */
-function palabraAleatoria($nombreJugador, $palabrasTotales, $partidaJugador)
+function palabrasUsadas($nombreJugador, $palabrasTotales, $partidaJugador)
 {   
     //string $palabraAleatoria array $palabrasSeleccionadas $palabrasNoSeeleccionadas boolean $repetida
 
-    // Almacena las palabras YA usadas por el jugador.
     $palabrasSeleccionadas = [];
+    $palabrasNoSeeleccionadas = [];
+
+    // Almacena las palabras YA usadas por el jugador.
     foreach ($partidaJugador as $laPartida) {
         if ($laPartida["jugador"] == $nombreJugador) {
             $palabrasSeleccionadas[] = strtoupper($laPartida["palabraWordix"]);
@@ -411,15 +430,7 @@ function palabraAleatoria($nombreJugador, $palabrasTotales, $partidaJugador)
         }
     }  
 
-    // Revisa si hay palabras disponibles para jugar
-    if (count($palabrasNoSeleccionadas) > 0) {
-        // Elige una palabra al azar
-        $indiceAlAzar = rand(0, count($palabrasNoSeleccionadas) - 1);
-        $palabraAleatoria = $palabrasNoSeleccionadas[$indiceAlAzar];
-    } else {
-        $palabraAleatoria = "(!) Ya jugó con todas las palabras disponibles.";
-    }
-    return($palabraAleatoria);
+    return ($palabrasNoSeeleccionadas);
 }
 
 
@@ -473,11 +484,19 @@ do {
             break;
         case 2: 
             $nombreJugador = solicitarNombreJugador();
-            $palabraAleatoria = palabraAleatoria($nombreJugador,$palabrasTotales,$partidasTotales);
-            $partidaJugador = jugarWordix($palabraAleatoria, $nombreJugador);
+            $palabrasDisponibles = palabrasUsadas($nombreJugador,$palabrasTotales,$partidasTotales);
 
-            array_push($partidasTotales, $partidaJugador);
-            array_push($ordenDePalabras, ["jugador" => $nombreJugador, "palabraWordix" => $palabraAleatoria]);
+            // Revisa si hay palabras disponibles para jugar
+            if (count($palabrasDisponibles) > 0) {
+                // Elige una palabra al azar y juega al Wordix
+                $indiceAlAzar = rand(0, count($palabrasDisponibles) - 1);
+                $palabraAleatoria = $palabrasDisponibles [$indiceAlAzar];
+                $partidaJugador = jugarWordix($palabraAleatoria, $nombreJugador);
+                array_push($partidasTotales, $partidaJugador);
+                array_push($ordenDePalabras, ["jugador" => $nombreJugador, "palabraWordix" => $palabraAleatoria]);
+            } else {
+                echo escribirRojo("(!) Ya jugó con todas las palabras disponibles."). "\n";
+            }
 
             break;
         case 3:
