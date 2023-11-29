@@ -380,7 +380,6 @@ function comparacionJugadores ($clave1, $clave2)
 /**
  * Retorna un arreglo de palabras ya usadas por jugador.
  * @param string $nombreJugador
- * @param array $palabrasTotales
  * @param array $partidaJugador
  * @return array
  */
@@ -477,11 +476,11 @@ do {
 
             if((count($palabrasYaJugadas) == count($palabrasTotales))){
                 echo escribirRojo("(!) Ya jugo con todas las palabras disponibles."). "\n";
-            }else{
+            }elseif((count($palabrasYaJugadas) < count($palabrasTotales))){
                 $palabraElegida = palabraAleatoria($palabrasYaJugadas, $palabrasTotales);
                 $partidaJugador = jugarWordix($palabraElegida, $nombreJugador);
                 array_push($partidasTotales, $partidaJugador);
-                array_push($ordenDePalabras, ["palabraWordix" => $palabraElegida, "jugador" => $nombreJugador]);
+                array_push($ordenDePalabras, ["jugador" => $nombreJugador, "palabraWordix" => $palabraElegida]);
             }
         
             break;
