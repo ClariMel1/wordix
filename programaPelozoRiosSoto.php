@@ -85,23 +85,6 @@ function cargarPartidas()
         ["palabraWordix" => "PIANO","jugador" => "clara","intentos" => 3,"puntaje" => 13],
         ["palabraWordix" => "NAVES","jugador" => "clara","intentos" => 2,"puntaje" => 16],
         ["palabraWordix" => "MANGO","jugador" => "diego","intentos" => 0,"puntaje" => 0],
-
-        ["palabraWordix" => "MUJER","jugador" => "clara","intentos" => 3,"puntaje" => 15],
-        ["palabraWordix" => "QUESO","jugador" => "clara","intentos" => 3,"puntaje" => 15],
-        ["palabraWordix" => "FUEGO","jugador" => "clara","intentos" => 3,"puntaje" => 15],
-        ["palabraWordix" => "CASAS","jugador" => "clara","intentos" => 3,"puntaje" => 15],
-        ["palabraWordix" => "RASGO","jugador" => "clara","intentos" => 3,"puntaje" => 15],
-        ["palabraWordix" => "GATOS","jugador" => "clara","intentos" => 3,"puntaje" => 15],
-        ["palabraWordix" => "GOTAS","jugador" => "clara","intentos" => 3,"puntaje" => 15],
-        ["palabraWordix" => "HUEVO","jugador" => "clara","intentos" => 3,"puntaje" => 15],
-        ["palabraWordix" => "MELON","jugador" => "clara","intentos" => 3,"puntaje" => 15],
-        ["palabraWordix" => "YUYOS","jugador" => "clara","intentos" => 3,"puntaje" => 15],
-        ["palabraWordix" => "PISOS","jugador" => "clara","intentos" => 3,"puntaje" => 15],
-        ["palabraWordix" => "CEBRA","jugador" => "clara","intentos" => 3,"puntaje" => 15],
-        ["palabraWordix" => "MANGO","jugador" => "clara","intentos" => 3,"puntaje" => 15],
-        ["palabraWordix" => "LINCE","jugador" => "clara","intentos" => 3,"puntaje" => 15],
-        ["palabraWordix" => "FLAMA","jugador" => "clara","intentos" => 3,"puntaje" => 15],
-        ["palabraWordix" => "GRANO","jugador" => "clara","intentos" => 3,"puntaje" => 15],
     ];
     return $coleccionPartidas;
 }
@@ -395,20 +378,17 @@ function comparacionJugadores ($clave1, $clave2)
 
 //OPCION Nº2 DEL MENU DE OPCIONES
 /**
- * Controla que palabras ya fueron usadas por el jugador y en caso de haber palabras sin jugar, retorna
- * el arreglo completo del mismo.
+ * Retorna un arreglo de palabras ya usadas por jugador.
  * @param string $nombreJugador
  * @param array $palabrasTotales
  * @param array $partidaJugador
  * @return array
  */
-function palabrasUsadas($nombreJugador, $palabrasTotales, $partidaJugador)
+function palabrasUsadas($nombreJugador, $partidaJugador)
 {   
-    //string $palabraAleatoria array $palabrasSeleccionadas $palabrasNoSeeleccionadas boolean $repetida
+    // array $palabrasSeleccionadas
 
     $palabrasSeleccionadas = [];
-    $palabrasNoSeeleccionadas = [];
-
     // Almacena las palabras YA usadas por el jugador.
     foreach ($partidaJugador as $laPartida) {
         if ($laPartida["jugador"] == $nombreJugador) {
@@ -416,24 +396,33 @@ function palabrasUsadas($nombreJugador, $palabrasTotales, $partidaJugador)
         }
     }
 
-    foreach ($palabrasTotales as $palabra) {
-        $repetida = false;
-        // Verifica si la palabra está en el arreglo a quitar
-        foreach ($palabrasSeleccionadas as $palabraRepetida) {
-            if ($palabra == $palabraRepetida) {
-                $repetida = true;
-            }
-        }
-        // Si la palabra no está repetida, agrégala al resultado
-        if (!$repetida) {    
-            $palabrasNoSeleccionadas[] = $palabra;
-        }
-    }  
-
-    return ($palabrasNoSeeleccionadas);
+    return($palabrasSeleccionadas);
 }
 
+/**
+ * Se encarga de dar una palabra aleatoria la cual no haya sido jugada por el mismo Jugador.
+ * @param array $palabrasUsadas
+ * @param array $palabrasCargadas
+ * @return string
+ */
+function palabraAleatoria ($palabrasUsadas, $palabrasCargadas)
+{
+    //string $palabraAlAzar int $indice boolean $esPalabraRepetida 
+    $esPalabraRepetida = false;
 
+    do{
+        $indice = rand(0, count($palabrasUsadas) - 1);
+        $palabraAlAzar = $palabrasCargadas[$indice];
+
+        foreach ($palabrasUsadas as $palabra){
+            if($palabra == $palabraAlAzar){
+                $esPalabraRepetida = true;
+            }
+        }
+    }while($esPalabraRepetida == true);
+
+    return ($palabraAlAzar);
+}
 
 /**************************************/
 /*********** PROGRAMA PRINCIPAL *******/
@@ -484,20 +473,17 @@ do {
             break;
         case 2: 
             $nombreJugador = solicitarNombreJugador();
-            $palabrasDisponibles = palabrasUsadas($nombreJugador,$palabrasTotales,$partidasTotales);
+            $palabrasYaJugadas = palabrasUsadas($nombreJugador,$partidasTotales);
 
-            // Revisa si hay palabras disponibles para jugar
-            if (count($palabrasDisponibles) > 0) {
-                // Elige una palabra al azar y juega al Wordix
-                $indiceAlAzar = rand(0, count($palabrasDisponibles) - 1);
-                $palabraAleatoria = $palabrasDisponibles [$indiceAlAzar];
-                $partidaJugador = jugarWordix($palabraAleatoria, $nombreJugador);
+            if((count($palabrasYaJugadas) == count($palabrasTotales))){
+                echo escribirRojo("(!) Ya jugo con todas las palabras disponibles."). "\n";
+            }else{
+                $palabraElegida = palabraAleatoria($palabrasYaJugadas, $palabrasTotales);
+                $partidaJugador = jugarWordix($palabraElegida, $nombreJugador);
                 array_push($partidasTotales, $partidaJugador);
-                array_push($ordenDePalabras, ["jugador" => $nombreJugador, "palabraWordix" => $palabraAleatoria]);
-            } else {
-                echo escribirRojo("(!) Ya jugó con todas las palabras disponibles."). "\n";
+                array_push($ordenDePalabras, ["palabraWordix" => $palabraElegida, "jugador" => $nombreJugador]);
             }
-
+        
             break;
         case 3:
             do {
