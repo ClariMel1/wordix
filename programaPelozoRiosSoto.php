@@ -61,7 +61,7 @@ function cargarColeccionPalabras()
  */
 function cargarPartidas()
 {
-    $coleccionPartidas =[
+    $coleccionPartidas = [
         ["palabraWordix" => "QUESO","jugador" => "majo","intentos" => 0,"puntaje"=>0 ],
         ["palabraWordix" => "GOTAS","jugador" => "majo","intentos" => 4,"puntaje" => 13],
         ["palabraWordix" => "CASAS","jugador" => "rudolf","intentos" => 3,"puntaje"=>14 ],
@@ -85,8 +85,10 @@ function cargarPartidas()
         ["palabraWordix" => "PIANO","jugador" => "clara","intentos" => 3,"puntaje" => 13],
         ["palabraWordix" => "NAVES","jugador" => "clara","intentos" => 2,"puntaje" => 16],
         ["palabraWordix" => "MANGO","jugador" => "diego","intentos" => 0,"puntaje" => 0],
+
     ];
     return $coleccionPartidas;
+
 }
 
 //ESTRUCTURA DE DATOS C
@@ -207,22 +209,33 @@ function agregarPalabra($coleccionPalabras, $palabra)
 
 //CONSIGNA Nº8
 /**
- * Dada una coleccion de partidas y nombre del Jugador, mostrar la primera partida que ganada del jugador.
+ * Dada una coleccion de partidas y nombre del Jugador, determina si el jugador gano alguna partida,
+ * si no jugo ninguna partida o si jugo pero no gano.
  * @param array $coleccionPartidas
  * @param string $nombreJugador
  * @return int
  */
 function partidaGanada($coleccionPartidas, $nombreJugador)
 {
-    $valorPartidaGanada = -1;
+    //int $valorPartidaGanada $indice $numPartidas
 
-    foreach ($coleccionPartidas as $llave => $partidasGuardadas) {
-        if ($partidasGuardadas["jugador"] == $nombreJugador && $partidasGuardadas["intentos"] > 0 && $valorPartidaGanada == -1) {
-            $valorPartidaGanada = $llave;
+    $valorPartidaGanada = -1;
+    $indice = 0;
+    $numPartidas = count($coleccionPartidas);
+
+    while ($indice < $numPartidas && ($valorPartidaGanada == -2 || $valorPartidaGanada == -1)) {
+        $partidasGuardadas = $coleccionPartidas[$indice];
+
+        if ($partidasGuardadas["jugador"] == $nombreJugador && $partidasGuardadas["puntaje"] > 0) {
+            $valorPartidaGanada = $indice;
         }
+        elseif($partidasGuardadas["jugador"] == $nombreJugador && $partidasGuardadas["puntaje"] == 0){
+            $valorPartidaGanada = -2;
+        }
+        $indice++;
     }
 
-    return $valorPartidaGanada;
+    return ($valorPartidaGanada);
 }
 
 //CONSIGNA Nº9
@@ -421,7 +434,28 @@ function palabraAleatoria($nombreJugador, $palabrasTotales, $partidaJugador)
     return($palabraAleatoria);
 }
 
+/**
+ * Determina si la palabra ya fue jugada por el jugador.
+ * @param string $nombreJugador
+ * @param array $partidasGenerales
+ * @param string $palabraAUsar
+ * @return boolean
+ */
+function palabraEncontrada ($nombreJugador, $partidasGenerales, $palabraAUsar)
+{
+    //int $i boolean $esRepetida
 
+    $esRepetida = false;
+    $i = 0;
+    while($i < count($partidasGenerales) && !$esRepetida){
+        if($partidasGenerales[$i]["jugador"] == $nombreJugador && $partidasGenerales[$i]["palabraWordix"] == $palabraAUsar){
+            $esRepetida = true;
+        }
+        $i++;
+    }
+
+    return ($esRepetida);
+}
 
 /**************************************/
 /*********** PROGRAMA PRINCIPAL *******/
@@ -458,16 +492,22 @@ do {
     switch ($opcion) {
         case 1: 
             $rangoMin = 1;
-            $rangoMax = count($palabrasTotales) + 1;
+            $rangoMax = count($palabrasTotales);
 
+            
             $nombreJugador = solicitarNombreJugador();
             $numeroElegido = solicitarNumeroEntre ($rangoMin, $rangoMax);
-
             $palabraSeleccionada = $palabrasTotales[$numeroElegido - 1];
-            $partidaJugador = jugarWordix($palabraSeleccionada, $nombreJugador);
-            
-            array_push($partidasTotales, $partidaJugador);
-            array_push($ordenDePalabras, ["jugador" => $nombreJugador, "palabraWordix" => $palabraSeleccionada]);
+
+            $palabraYaUsada = palabraEncontrada($nombreJugador, $partidasTotales, $palabraSeleccionada);
+
+            if($palabraYaUsada == false){
+                $partidaJugador = jugarWordix($palabraSeleccionada, $nombreJugador);
+                array_push($partidasTotales, $partidaJugador);
+                array_push($ordenDePalabras, ["jugador" => $nombreJugador, "palabraWordix" => $palabraSeleccionada]);
+            }else{
+                echo escribirRojo("(!) Usted ya jugo con esa palabra"). "\n";
+            }
 
             break;
         case 2: 
@@ -480,9 +520,11 @@ do {
 
             break;
         case 3:
+            $rangoMin = 1;
+            $rangoMax = count($partidasTotales);
+
             do {
-                echo "Ingrese número de partida: ";
-                $nroDePartida = trim(fgets(STDIN));
+                $nroDePartida = solicitarNumeroEntre ($rangoMin, $rangoMax);
             
                 if ($nroDePartida >= 1 && $nroDePartida < count($partidasTotales) + 1) {
                     $datosPartida = imprimirDatosPartida($nroDePartida - 1 , $partidasTotales);
@@ -496,11 +538,13 @@ do {
             $nombreJugador = solicitarNombreJugador();
             $partidaGanadora = partidaGanada($partidasTotales,$nombreJugador);
             
-            if ($partidaGanadora !== -1){
+            if ($partidaGanadora == -1){
+                echo escribirRojo("(!) El jugador <<$nombreJugador>> no jugo ninguna partida.")."\n";
+            }elseif($partidaGanadora == -2){
+                echo escribirRojo("(!) El jugador <<$nombreJugador>> no gano ninguna partida.")."\n";
+            }else{
                 $partidaGanadora = $partidaGanadora;
                 $imprimeDatosPartida = imprimirDatosPartida($partidaGanadora,$partidasTotales);
-            }else{
-                echo escribirRojo("(!) El jugador <<$nombreJugador>> no jugó o no ganó ninguna partida.")."\n";
             }
 
             break;
